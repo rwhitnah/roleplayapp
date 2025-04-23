@@ -5,10 +5,12 @@ import { serveStatic } from '@hono/node-server/serve-static'
 
 const app = new Hono()
 
+
 app.use('*', serveStatic({ root: './public' }))
 
 app.get('/', (c) => {
-  return c.html(<Layout><div class="h-[calc(100dvh-144px)] overflow-y-scroll scrollbar-hide">Hello World</div></Layout>)
+  console.log('main')
+  return c.html(<Layout>Hello World</Layout>)
 })
 
 serve({

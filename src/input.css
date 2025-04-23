@@ -3,3 +3,8 @@
 @theme {
   --font-sans: Inter, sans-serif;
 }
+
+.dropdown:focus-within .dropdown-menu {
+  /* @apply block; */
+  display:block;
+}

@@ -6,8 +6,11 @@
     "css": "npx @tailwindcss/cli -i ./src/input.css -o ./public/output.css --watch"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.2",
+    "@heroicons/react": "^2.2.0",
     "@hono/node-server": "^1.14.1",
     "@tailwindcss/cli": "^4.1.4",
+    "clsx": "^2.1.1",
     "hono": "^4.7.7",
     "tailwindcss": "^4.1.4"
   },
