@@ -9,7 +9,6 @@ export { skill as doomBlow } from './doomBlow.js';
 export { skill as enhancedStrike } from './enhancedStrike.js';
 export { skill as evade } from './evade.js';
 export { skill as fearBerserkBlow } from './fearBerserkBlow.js';
-export { skill as herbalLore } from './herbalLore.js';
 export { skill as improvedAssassinate } from './improvedAssassinate.js';
 export { skill as opportunisticAttack } from './opportunisticAttack.js';
 export { skill as silenceStunBlow } from './silenceStunBlow.js';

@@ -15,8 +15,6 @@ skill.costs({
 
 skill.allowsLimitlessRanks();
 
-skill.requireSkill('HerbalLore');
-
 skill.crafting('Alchemy');
 
 export { skill };
