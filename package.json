@@ -2,7 +2,7 @@
   "name": "roleplayapp",
   "type": "module",
   "scripts": {
-    "predev": "prisma generate && prisma migrate deploy",
+    "predev": "prisma migrate deploy",
     "dev": "tsx watch src/index.tsx",
     "css": "npx @tailwindcss/cli -i ./src/input.css -o ./public/output.css --watch"
   },
