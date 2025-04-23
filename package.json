@@ -15,7 +15,8 @@
     "hono": "^4.7.7",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
-    "tailwindcss": "^4.1.4"
+    "tailwindcss": "^4.1.4",
+    "zod": "^3.24.3"
   },
   "devDependencies": {
     "@types/node": "^20.11.17",
