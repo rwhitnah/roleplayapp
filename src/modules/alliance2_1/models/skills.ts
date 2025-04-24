@@ -57,7 +57,7 @@ export const SkillNameValidator = z.enum([
     "Parry",
     "Polearm",
     "PreciseBlow",
-    "Craftsman",
+    "Profession",
     "PurifyingDrainingStrike",
     "RacialEvade",
     "RacialResolute",

@@ -147,6 +147,13 @@ exports.Prisma.CharacterScalarFieldEnum = {
   chapterId: 'chapterId'
 };
 
+exports.Prisma.SkillScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  ranks: 'ranks',
+  characterId: 'characterId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -170,7 +177,8 @@ exports.Role = exports.$Enums.Role = {
 exports.Prisma.ModelName = {
   User: 'User',
   Chapter: 'Chapter',
-  Character: 'Character'
+  Character: 'Character',
+  Skill: 'Skill'
 };
 
 /**

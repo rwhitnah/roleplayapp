@@ -20,7 +20,7 @@ export const ShowCharacter: FC = (props) => {
                 if (props.character && props.character.characterClass && skill.canBuyForCharacter(props.character)) {
                   return <div>
                     {/* @ts-ignore */}
-                    <h5>{`${skill.friendlyName} - ${skill.skillCategory} - ${skill.skillCosts[props.character.characterClass]}`}</h5>
+                    <h5>{`${skill.friendlyName} - ${skill.skillCategory} - ${skill.costForCharacterAtRank(props.character)}`}</h5>
                   </div>
                 }
               })}

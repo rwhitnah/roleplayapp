@@ -218,6 +218,9 @@ app.get('/characters/:id', async (c) => {
   const character = await prisma.character.findFirst({
     where: {
       id: parseInt(c.req.param('id')),
+    },
+    include: {
+      skill: true
     }
   })
 

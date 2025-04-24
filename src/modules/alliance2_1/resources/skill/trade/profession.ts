@@ -1,7 +1,7 @@
 import { Skill } from '../skill.js';
 
-const skill = new Skill('Craftsman');
-skill.friendly('Craftsman');
+const skill = new Skill('Profession');
+skill.friendly('Profession');
 skill.category('Trade');
 skill.costs({
   Fighter: 2,

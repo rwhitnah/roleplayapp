@@ -61,4 +61,15 @@ model Character {
   userId    Int
   chapter   Chapter @relation(fields: [chapterId], references: [id])
   chapterId Int
+
+  skill Skill[]
+}
+
+model Skill {
+  id    Int    @id @default(autoincrement())
+  name  String
+  ranks Int    @default(0)
+
+  character   Character @relation(fields: [characterId], references: [id])
+  characterId Int
 }

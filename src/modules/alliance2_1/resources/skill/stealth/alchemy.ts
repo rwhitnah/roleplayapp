@@ -16,5 +16,6 @@ skill.costs({
 skill.allowsLimitlessRanks();
 
 skill.crafting('Alchemy');
+skill.requireSkill('Educated');
 
 export { skill };
