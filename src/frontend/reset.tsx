@@ -3,7 +3,7 @@ import { Layout } from "./layout.js";
 
 export const Reset: FC = (props) => {
   return (
-    <Layout user={props.user}>
+    <Layout user={props.user} characters={props.characters}>
       <div class="hero min-h-screen bg-base-200">
         <div class="hero-content flex-col lg:flex-row-reverse">
           <div class="text-center ml-5">

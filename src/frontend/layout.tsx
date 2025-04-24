@@ -8,7 +8,7 @@ export const Layout: FC = (props) => {
     <html class="bg-secondary">
       <Head/>
       <body>
-        <Navigation user={props.user}/>
+        <Navigation user={props.user} characters={props.characters}/>
         {props.children}</body>
       <Footer/>
     </html>

@@ -1,47 +1,10 @@
 import type { FC } from 'hono/jsx'
 
-import { Avatar } from '../components/avatar.js'
-import {
-  Dropdown,
-  DropdownButton,
-  DropdownDivider,
-  DropdownItem,
-  DropdownLabel,
-  DropdownMenu
-} from '../components/dropdown.js';
 import { Navbar, NavbarDivider, NavbarItem, NavbarLabel, NavbarSection, NavbarSpacer } from '../components/navbar.js'
 
 export const Navigation: FC = (props: any) => {
   return (
     <Navbar>
-
-      {/* <Dropdown>
-        <DropdownButton as={NavbarItem}>
-          <Avatar src="/tailwind-logo.svg" />
-          <NavbarLabel>Tailwind Labs</NavbarLabel>
-          <ChevronDownIcon />
-        </DropdownButton>
-        <DropdownMenu className="min-w-64" anchor="bottom start">
-          <DropdownItem href="/teams/1/settings">
-            <Cog8ToothIcon />
-            <DropdownLabel>Settings</DropdownLabel>
-          </DropdownItem>6
-          <DropdownDivider />
-          <DropdownItem href="/teams/1">
-            <Avatar slot="icon" src="/tailwind-logo.svg" />
-            <DropdownLabel>Tailwind Labs</DropdownLabel>
-          </DropdownItem>
-          <DropdownItem href="/teams/2">
-            <Avatar slot="icon" initials="WC" className="bg-purple-500 text-white" />
-            <DropdownLabel>Workcation</DropdownLabel>
-          </DropdownItem>
-          <DropdownDivider />
-          <DropdownItem href="/teams/create">
-            <PlusIcon />
-            <DropdownLabel>New team&hellip;</DropdownLabel>
-          </DropdownItem>
-        </DropdownMenu>
-      </Dropdown> */}
       <NavbarDivider className="max-lg:hidden" />
       <NavbarSection className="max-lg:hidden">
         <NavbarItem href="/" current>
@@ -62,12 +25,28 @@ export const Navigation: FC = (props: any) => {
             <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z" />
           </svg>
         </NavbarItem>
-        {props.user && <NavbarItem href="/characters">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-          </svg>
-          <span>Characters</span>
-        </NavbarItem>}
+        {props.user && 
+          <NavbarItem className="dropdown">
+            <button tabindex={0} class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium leading-5 transition duration-150 ease-in-out" type="button" aria-haspopup="true" aria-expanded="true" aria-controls="headlessui-menu-items-117">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+              </svg>
+              <span>Characters</span>
+            </button>
+            <div class="hidden dropdown-menu">
+              <div class="absolute right-0 w-56 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none" aria-labelledby="headlessui-menu-button-1" id="headlessui-menu-items-117" role="menu">
+                {props.characters && <div class="py-1">
+                  {props.characters.map((char: any) => {
+                    return (<a href={`/characters/${char.id}`} class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"  role="menuitem" >{char.name}</a>)
+                  })}
+                </div>}
+                <div class="py-1">
+                  <a href="/characters/new" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"  role="menuitem" >New Character</a>
+                </div>
+              </div>
+            </div>
+          </NavbarItem>
+        }
         {props.user ? (
           <NavbarItem className="dropdown">
             <button tabindex={0} class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium leading-5 transition duration-150 ease-in-out" type="button" aria-haspopup="true" aria-expanded="true" aria-controls="headlessui-menu-items-117">
@@ -96,35 +75,6 @@ export const Navigation: FC = (props: any) => {
         ) : (
           <NavbarItem href="/login">Login</NavbarItem>
         )}
-        {/* <Dropdown>
-          <DropdownButton as={NavbarItem}>
-            <Avatar src="/profile-photo.jpg" square />
-          </DropdownButton>
-          <DropdownMenu className="min-w-64" anchor="bottom end">
-            <DropdownItem href="/my-profile">
-              <UserIcon />
-              <DropdownLabel>My profile</DropdownLabel>
-            </DropdownItem>
-            <DropdownItem href="/settings">
-              <Cog8ToothIcon />
-              <DropdownLabel>Settings</DropdownLabel>
-            </DropdownItem>
-            <DropdownDivider />
-            <DropdownItem href="/privacy-policy">
-              <ShieldCheckIcon />
-              <DropdownLabel>Privacy policy</DropdownLabel>
-            </DropdownItem>
-            <DropdownItem href="/share-feedback">
-              <LightBulbIcon />
-              <DropdownLabel>Share feedback</DropdownLabel>
-            </DropdownItem>
-            <DropdownDivider />
-            <DropdownItem href="/logout">
-              <ArrowRightStartOnRectangleIcon />
-              <DropdownLabel>Sign out</DropdownLabel>
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown> */}
       </NavbarSection>
     </Navbar>
   )

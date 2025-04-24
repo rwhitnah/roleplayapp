@@ -124,12 +124,27 @@ exports.Prisma.UserScalarFieldEnum = {
   salt: 'salt',
   firstname: 'firstname',
   lastname: 'lastname',
+  signInCount: 'signInCount',
   roles: 'roles'
 };
 
 exports.Prisma.ChapterScalarFieldEnum = {
   id: 'id',
   name: 'name'
+};
+
+exports.Prisma.CharacterScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  characterClass: 'characterClass',
+  startingXp: 'startingXp',
+  primarySchool: 'primarySchool',
+  raceName: 'raceName',
+  subrace: 'subrace',
+  undoXp: 'undoXp',
+  discardedAt: 'discardedAt',
+  userId: 'userId',
+  chapterId: 'chapterId'
 };
 
 exports.Prisma.SortOrder = {
@@ -141,6 +156,11 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
 exports.Role = exports.$Enums.Role = {
   PLAYER: 'PLAYER',
   LOGISTICS: 'LOGISTICS',
@@ -149,7 +169,8 @@ exports.Role = exports.$Enums.Role = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Chapter: 'Chapter'
+  Chapter: 'Chapter',
+  Character: 'Character'
 };
 
 /**

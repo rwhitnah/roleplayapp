@@ -23,6 +23,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  * 
  */
 export type Chapter = $Result.DefaultSelection<Prisma.$ChapterPayload>
+/**
+ * Model Character
+ * 
+ */
+export type Character = $Result.DefaultSelection<Prisma.$CharacterPayload>
 
 /**
  * Enums
@@ -186,6 +191,16 @@ export class PrismaClient<
     * ```
     */
   get chapter(): Prisma.ChapterDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.character`: Exposes CRUD operations for the **Character** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Characters
+    * const characters = await prisma.character.findMany()
+    * ```
+    */
+  get character(): Prisma.CharacterDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -627,7 +642,8 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
-    Chapter: 'Chapter'
+    Chapter: 'Chapter',
+    Character: 'Character'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -646,7 +662,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "chapter"
+      modelProps: "user" | "chapter" | "character"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -798,6 +814,80 @@ export namespace Prisma {
           }
         }
       }
+      Character: {
+        payload: Prisma.$CharacterPayload<ExtArgs>
+        fields: Prisma.CharacterFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CharacterFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CharacterPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CharacterFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CharacterPayload>
+          }
+          findFirst: {
+            args: Prisma.CharacterFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CharacterPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CharacterFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CharacterPayload>
+          }
+          findMany: {
+            args: Prisma.CharacterFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CharacterPayload>[]
+          }
+          create: {
+            args: Prisma.CharacterCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CharacterPayload>
+          }
+          createMany: {
+            args: Prisma.CharacterCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CharacterCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CharacterPayload>[]
+          }
+          delete: {
+            args: Prisma.CharacterDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CharacterPayload>
+          }
+          update: {
+            args: Prisma.CharacterUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CharacterPayload>
+          }
+          deleteMany: {
+            args: Prisma.CharacterDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CharacterUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CharacterUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CharacterPayload>[]
+          }
+          upsert: {
+            args: Prisma.CharacterUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CharacterPayload>
+          }
+          aggregate: {
+            args: Prisma.CharacterAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCharacter>
+          }
+          groupBy: {
+            args: Prisma.CharacterGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CharacterGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CharacterCountArgs<ExtArgs>
+            result: $Utils.Optional<CharacterCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -884,6 +974,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     chapter?: ChapterOmit
+    character?: CharacterOmit
   }
 
   /* Types for Logging */
@@ -979,10 +1070,12 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     logiChapters: number
+    characters: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     logiChapters?: boolean | UserCountOutputTypeCountLogiChaptersArgs
+    characters?: boolean | UserCountOutputTypeCountCharactersArgs
   }
 
   // Custom InputTypes
@@ -1003,6 +1096,13 @@ export namespace Prisma {
     where?: ChapterWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCharactersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CharacterWhereInput
+  }
+
 
   /**
    * Count Type ChapterCountOutputType
@@ -1010,10 +1110,12 @@ export namespace Prisma {
 
   export type ChapterCountOutputType = {
     User: number
+    Characters: number
   }
 
   export type ChapterCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     User?: boolean | ChapterCountOutputTypeCountUserArgs
+    Characters?: boolean | ChapterCountOutputTypeCountCharactersArgs
   }
 
   // Custom InputTypes
@@ -1032,6 +1134,13 @@ export namespace Prisma {
    */
   export type ChapterCountOutputTypeCountUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserWhereInput
+  }
+
+  /**
+   * ChapterCountOutputType without action
+   */
+  export type ChapterCountOutputTypeCountCharactersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CharacterWhereInput
   }
 
 
@@ -1053,10 +1162,12 @@ export namespace Prisma {
 
   export type UserAvgAggregateOutputType = {
     id: number | null
+    signInCount: number | null
   }
 
   export type UserSumAggregateOutputType = {
     id: number | null
+    signInCount: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -1066,6 +1177,7 @@ export namespace Prisma {
     salt: Uint8Array | null
     firstname: string | null
     lastname: string | null
+    signInCount: number | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1075,6 +1187,7 @@ export namespace Prisma {
     salt: Uint8Array | null
     firstname: string | null
     lastname: string | null
+    signInCount: number | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1084,6 +1197,7 @@ export namespace Prisma {
     salt: number
     firstname: number
     lastname: number
+    signInCount: number
     roles: number
     _all: number
   }
@@ -1091,10 +1205,12 @@ export namespace Prisma {
 
   export type UserAvgAggregateInputType = {
     id?: true
+    signInCount?: true
   }
 
   export type UserSumAggregateInputType = {
     id?: true
+    signInCount?: true
   }
 
   export type UserMinAggregateInputType = {
@@ -1104,6 +1220,7 @@ export namespace Prisma {
     salt?: true
     firstname?: true
     lastname?: true
+    signInCount?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1113,6 +1230,7 @@ export namespace Prisma {
     salt?: true
     firstname?: true
     lastname?: true
+    signInCount?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1122,6 +1240,7 @@ export namespace Prisma {
     salt?: true
     firstname?: true
     lastname?: true
+    signInCount?: true
     roles?: true
     _all?: true
   }
@@ -1219,6 +1338,7 @@ export namespace Prisma {
     salt: Uint8Array
     firstname: string
     lastname: string
+    signInCount: number
     roles: $Enums.Role[]
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
@@ -1248,8 +1368,10 @@ export namespace Prisma {
     salt?: boolean
     firstname?: boolean
     lastname?: boolean
+    signInCount?: boolean
     roles?: boolean
     logiChapters?: boolean | User$logiChaptersArgs<ExtArgs>
+    characters?: boolean | User$charactersArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1260,6 +1382,7 @@ export namespace Prisma {
     salt?: boolean
     firstname?: boolean
     lastname?: boolean
+    signInCount?: boolean
     roles?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -1270,6 +1393,7 @@ export namespace Prisma {
     salt?: boolean
     firstname?: boolean
     lastname?: boolean
+    signInCount?: boolean
     roles?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -1280,12 +1404,14 @@ export namespace Prisma {
     salt?: boolean
     firstname?: boolean
     lastname?: boolean
+    signInCount?: boolean
     roles?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "salt" | "firstname" | "lastname" | "roles", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "salt" | "firstname" | "lastname" | "signInCount" | "roles", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     logiChapters?: boolean | User$logiChaptersArgs<ExtArgs>
+    characters?: boolean | User$charactersArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1295,6 +1421,7 @@ export namespace Prisma {
     name: "User"
     objects: {
       logiChapters: Prisma.$ChapterPayload<ExtArgs>[]
+      characters: Prisma.$CharacterPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -1303,6 +1430,7 @@ export namespace Prisma {
       salt: Uint8Array
       firstname: string
       lastname: string
+      signInCount: number
       roles: $Enums.Role[]
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -1699,6 +1827,7 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     logiChapters<T extends User$logiChaptersArgs<ExtArgs> = {}>(args?: Subset<T, User$logiChaptersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChapterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    characters<T extends User$charactersArgs<ExtArgs> = {}>(args?: Subset<T, User$charactersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1734,6 +1863,7 @@ export namespace Prisma {
     readonly salt: FieldRef<"User", 'Bytes'>
     readonly firstname: FieldRef<"User", 'String'>
     readonly lastname: FieldRef<"User", 'String'>
+    readonly signInCount: FieldRef<"User", 'Int'>
     readonly roles: FieldRef<"User", 'Role[]'>
   }
     
@@ -2147,6 +2277,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.characters
+   */
+  export type User$charactersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Character
+     */
+    select?: CharacterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Character
+     */
+    omit?: CharacterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CharacterInclude<ExtArgs> | null
+    where?: CharacterWhereInput
+    orderBy?: CharacterOrderByWithRelationInput | CharacterOrderByWithRelationInput[]
+    cursor?: CharacterWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CharacterScalarFieldEnum | CharacterScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2340,6 +2494,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     User?: boolean | Chapter$UserArgs<ExtArgs>
+    Characters?: boolean | Chapter$CharactersArgs<ExtArgs>
     _count?: boolean | ChapterCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["chapter"]>
 
@@ -2361,6 +2516,7 @@ export namespace Prisma {
   export type ChapterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name", ExtArgs["result"]["chapter"]>
   export type ChapterInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     User?: boolean | Chapter$UserArgs<ExtArgs>
+    Characters?: boolean | Chapter$CharactersArgs<ExtArgs>
     _count?: boolean | ChapterCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ChapterIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2370,6 +2526,7 @@ export namespace Prisma {
     name: "Chapter"
     objects: {
       User: Prisma.$UserPayload<ExtArgs>[]
+      Characters: Prisma.$CharacterPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2769,6 +2926,7 @@ export namespace Prisma {
   export interface Prisma__ChapterClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     User<T extends Chapter$UserArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$UserArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Characters<T extends Chapter$CharactersArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$CharactersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3212,6 +3370,30 @@ export namespace Prisma {
   }
 
   /**
+   * Chapter.Characters
+   */
+  export type Chapter$CharactersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Character
+     */
+    select?: CharacterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Character
+     */
+    omit?: CharacterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CharacterInclude<ExtArgs> | null
+    where?: CharacterWhereInput
+    orderBy?: CharacterOrderByWithRelationInput | CharacterOrderByWithRelationInput[]
+    cursor?: CharacterWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CharacterScalarFieldEnum | CharacterScalarFieldEnum[]
+  }
+
+  /**
    * Chapter without action
    */
   export type ChapterDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3227,6 +3409,1200 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ChapterInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Character
+   */
+
+  export type AggregateCharacter = {
+    _count: CharacterCountAggregateOutputType | null
+    _avg: CharacterAvgAggregateOutputType | null
+    _sum: CharacterSumAggregateOutputType | null
+    _min: CharacterMinAggregateOutputType | null
+    _max: CharacterMaxAggregateOutputType | null
+  }
+
+  export type CharacterAvgAggregateOutputType = {
+    id: number | null
+    startingXp: Decimal | null
+    undoXp: Decimal | null
+    userId: number | null
+    chapterId: number | null
+  }
+
+  export type CharacterSumAggregateOutputType = {
+    id: number | null
+    startingXp: Decimal | null
+    undoXp: Decimal | null
+    userId: number | null
+    chapterId: number | null
+  }
+
+  export type CharacterMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    characterClass: string | null
+    startingXp: Decimal | null
+    primarySchool: string | null
+    raceName: string | null
+    subrace: string | null
+    undoXp: Decimal | null
+    discardedAt: Date | null
+    userId: number | null
+    chapterId: number | null
+  }
+
+  export type CharacterMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    characterClass: string | null
+    startingXp: Decimal | null
+    primarySchool: string | null
+    raceName: string | null
+    subrace: string | null
+    undoXp: Decimal | null
+    discardedAt: Date | null
+    userId: number | null
+    chapterId: number | null
+  }
+
+  export type CharacterCountAggregateOutputType = {
+    id: number
+    name: number
+    characterClass: number
+    startingXp: number
+    primarySchool: number
+    raceName: number
+    subrace: number
+    undoXp: number
+    discardedAt: number
+    userId: number
+    chapterId: number
+    _all: number
+  }
+
+
+  export type CharacterAvgAggregateInputType = {
+    id?: true
+    startingXp?: true
+    undoXp?: true
+    userId?: true
+    chapterId?: true
+  }
+
+  export type CharacterSumAggregateInputType = {
+    id?: true
+    startingXp?: true
+    undoXp?: true
+    userId?: true
+    chapterId?: true
+  }
+
+  export type CharacterMinAggregateInputType = {
+    id?: true
+    name?: true
+    characterClass?: true
+    startingXp?: true
+    primarySchool?: true
+    raceName?: true
+    subrace?: true
+    undoXp?: true
+    discardedAt?: true
+    userId?: true
+    chapterId?: true
+  }
+
+  export type CharacterMaxAggregateInputType = {
+    id?: true
+    name?: true
+    characterClass?: true
+    startingXp?: true
+    primarySchool?: true
+    raceName?: true
+    subrace?: true
+    undoXp?: true
+    discardedAt?: true
+    userId?: true
+    chapterId?: true
+  }
+
+  export type CharacterCountAggregateInputType = {
+    id?: true
+    name?: true
+    characterClass?: true
+    startingXp?: true
+    primarySchool?: true
+    raceName?: true
+    subrace?: true
+    undoXp?: true
+    discardedAt?: true
+    userId?: true
+    chapterId?: true
+    _all?: true
+  }
+
+  export type CharacterAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Character to aggregate.
+     */
+    where?: CharacterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Characters to fetch.
+     */
+    orderBy?: CharacterOrderByWithRelationInput | CharacterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CharacterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Characters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Characters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Characters
+    **/
+    _count?: true | CharacterCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CharacterAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CharacterSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CharacterMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CharacterMaxAggregateInputType
+  }
+
+  export type GetCharacterAggregateType<T extends CharacterAggregateArgs> = {
+        [P in keyof T & keyof AggregateCharacter]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCharacter[P]>
+      : GetScalarType<T[P], AggregateCharacter[P]>
+  }
+
+
+
+
+  export type CharacterGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CharacterWhereInput
+    orderBy?: CharacterOrderByWithAggregationInput | CharacterOrderByWithAggregationInput[]
+    by: CharacterScalarFieldEnum[] | CharacterScalarFieldEnum
+    having?: CharacterScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CharacterCountAggregateInputType | true
+    _avg?: CharacterAvgAggregateInputType
+    _sum?: CharacterSumAggregateInputType
+    _min?: CharacterMinAggregateInputType
+    _max?: CharacterMaxAggregateInputType
+  }
+
+  export type CharacterGroupByOutputType = {
+    id: number
+    name: string
+    characterClass: string
+    startingXp: Decimal
+    primarySchool: string | null
+    raceName: string | null
+    subrace: string | null
+    undoXp: Decimal
+    discardedAt: Date | null
+    userId: number
+    chapterId: number
+    _count: CharacterCountAggregateOutputType | null
+    _avg: CharacterAvgAggregateOutputType | null
+    _sum: CharacterSumAggregateOutputType | null
+    _min: CharacterMinAggregateOutputType | null
+    _max: CharacterMaxAggregateOutputType | null
+  }
+
+  type GetCharacterGroupByPayload<T extends CharacterGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CharacterGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CharacterGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CharacterGroupByOutputType[P]>
+            : GetScalarType<T[P], CharacterGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CharacterSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    characterClass?: boolean
+    startingXp?: boolean
+    primarySchool?: boolean
+    raceName?: boolean
+    subrace?: boolean
+    undoXp?: boolean
+    discardedAt?: boolean
+    userId?: boolean
+    chapterId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["character"]>
+
+  export type CharacterSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    characterClass?: boolean
+    startingXp?: boolean
+    primarySchool?: boolean
+    raceName?: boolean
+    subrace?: boolean
+    undoXp?: boolean
+    discardedAt?: boolean
+    userId?: boolean
+    chapterId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["character"]>
+
+  export type CharacterSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    characterClass?: boolean
+    startingXp?: boolean
+    primarySchool?: boolean
+    raceName?: boolean
+    subrace?: boolean
+    undoXp?: boolean
+    discardedAt?: boolean
+    userId?: boolean
+    chapterId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["character"]>
+
+  export type CharacterSelectScalar = {
+    id?: boolean
+    name?: boolean
+    characterClass?: boolean
+    startingXp?: boolean
+    primarySchool?: boolean
+    raceName?: boolean
+    subrace?: boolean
+    undoXp?: boolean
+    discardedAt?: boolean
+    userId?: boolean
+    chapterId?: boolean
+  }
+
+  export type CharacterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "characterClass" | "startingXp" | "primarySchool" | "raceName" | "subrace" | "undoXp" | "discardedAt" | "userId" | "chapterId", ExtArgs["result"]["character"]>
+  export type CharacterInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }
+  export type CharacterIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }
+  export type CharacterIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }
+
+  export type $CharacterPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Character"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      chapter: Prisma.$ChapterPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+      characterClass: string
+      startingXp: Prisma.Decimal
+      primarySchool: string | null
+      raceName: string | null
+      subrace: string | null
+      undoXp: Prisma.Decimal
+      discardedAt: Date | null
+      userId: number
+      chapterId: number
+    }, ExtArgs["result"]["character"]>
+    composites: {}
+  }
+
+  type CharacterGetPayload<S extends boolean | null | undefined | CharacterDefaultArgs> = $Result.GetResult<Prisma.$CharacterPayload, S>
+
+  type CharacterCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CharacterFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CharacterCountAggregateInputType | true
+    }
+
+  export interface CharacterDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Character'], meta: { name: 'Character' } }
+    /**
+     * Find zero or one Character that matches the filter.
+     * @param {CharacterFindUniqueArgs} args - Arguments to find a Character
+     * @example
+     * // Get one Character
+     * const character = await prisma.character.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CharacterFindUniqueArgs>(args: SelectSubset<T, CharacterFindUniqueArgs<ExtArgs>>): Prisma__CharacterClient<$Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Character that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CharacterFindUniqueOrThrowArgs} args - Arguments to find a Character
+     * @example
+     * // Get one Character
+     * const character = await prisma.character.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CharacterFindUniqueOrThrowArgs>(args: SelectSubset<T, CharacterFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CharacterClient<$Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Character that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CharacterFindFirstArgs} args - Arguments to find a Character
+     * @example
+     * // Get one Character
+     * const character = await prisma.character.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CharacterFindFirstArgs>(args?: SelectSubset<T, CharacterFindFirstArgs<ExtArgs>>): Prisma__CharacterClient<$Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Character that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CharacterFindFirstOrThrowArgs} args - Arguments to find a Character
+     * @example
+     * // Get one Character
+     * const character = await prisma.character.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CharacterFindFirstOrThrowArgs>(args?: SelectSubset<T, CharacterFindFirstOrThrowArgs<ExtArgs>>): Prisma__CharacterClient<$Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Characters that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CharacterFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Characters
+     * const characters = await prisma.character.findMany()
+     * 
+     * // Get first 10 Characters
+     * const characters = await prisma.character.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const characterWithIdOnly = await prisma.character.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CharacterFindManyArgs>(args?: SelectSubset<T, CharacterFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Character.
+     * @param {CharacterCreateArgs} args - Arguments to create a Character.
+     * @example
+     * // Create one Character
+     * const Character = await prisma.character.create({
+     *   data: {
+     *     // ... data to create a Character
+     *   }
+     * })
+     * 
+     */
+    create<T extends CharacterCreateArgs>(args: SelectSubset<T, CharacterCreateArgs<ExtArgs>>): Prisma__CharacterClient<$Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Characters.
+     * @param {CharacterCreateManyArgs} args - Arguments to create many Characters.
+     * @example
+     * // Create many Characters
+     * const character = await prisma.character.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CharacterCreateManyArgs>(args?: SelectSubset<T, CharacterCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Characters and returns the data saved in the database.
+     * @param {CharacterCreateManyAndReturnArgs} args - Arguments to create many Characters.
+     * @example
+     * // Create many Characters
+     * const character = await prisma.character.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Characters and only return the `id`
+     * const characterWithIdOnly = await prisma.character.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CharacterCreateManyAndReturnArgs>(args?: SelectSubset<T, CharacterCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Character.
+     * @param {CharacterDeleteArgs} args - Arguments to delete one Character.
+     * @example
+     * // Delete one Character
+     * const Character = await prisma.character.delete({
+     *   where: {
+     *     // ... filter to delete one Character
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CharacterDeleteArgs>(args: SelectSubset<T, CharacterDeleteArgs<ExtArgs>>): Prisma__CharacterClient<$Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Character.
+     * @param {CharacterUpdateArgs} args - Arguments to update one Character.
+     * @example
+     * // Update one Character
+     * const character = await prisma.character.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CharacterUpdateArgs>(args: SelectSubset<T, CharacterUpdateArgs<ExtArgs>>): Prisma__CharacterClient<$Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Characters.
+     * @param {CharacterDeleteManyArgs} args - Arguments to filter Characters to delete.
+     * @example
+     * // Delete a few Characters
+     * const { count } = await prisma.character.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CharacterDeleteManyArgs>(args?: SelectSubset<T, CharacterDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Characters.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CharacterUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Characters
+     * const character = await prisma.character.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CharacterUpdateManyArgs>(args: SelectSubset<T, CharacterUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Characters and returns the data updated in the database.
+     * @param {CharacterUpdateManyAndReturnArgs} args - Arguments to update many Characters.
+     * @example
+     * // Update many Characters
+     * const character = await prisma.character.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Characters and only return the `id`
+     * const characterWithIdOnly = await prisma.character.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CharacterUpdateManyAndReturnArgs>(args: SelectSubset<T, CharacterUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Character.
+     * @param {CharacterUpsertArgs} args - Arguments to update or create a Character.
+     * @example
+     * // Update or create a Character
+     * const character = await prisma.character.upsert({
+     *   create: {
+     *     // ... data to create a Character
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Character we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CharacterUpsertArgs>(args: SelectSubset<T, CharacterUpsertArgs<ExtArgs>>): Prisma__CharacterClient<$Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Characters.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CharacterCountArgs} args - Arguments to filter Characters to count.
+     * @example
+     * // Count the number of Characters
+     * const count = await prisma.character.count({
+     *   where: {
+     *     // ... the filter for the Characters we want to count
+     *   }
+     * })
+    **/
+    count<T extends CharacterCountArgs>(
+      args?: Subset<T, CharacterCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CharacterCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Character.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CharacterAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CharacterAggregateArgs>(args: Subset<T, CharacterAggregateArgs>): Prisma.PrismaPromise<GetCharacterAggregateType<T>>
+
+    /**
+     * Group by Character.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CharacterGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CharacterGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CharacterGroupByArgs['orderBy'] }
+        : { orderBy?: CharacterGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CharacterGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCharacterGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Character model
+   */
+  readonly fields: CharacterFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Character.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CharacterClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    chapter<T extends ChapterDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChapterDefaultArgs<ExtArgs>>): Prisma__ChapterClient<$Result.GetResult<Prisma.$ChapterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Character model
+   */
+  interface CharacterFieldRefs {
+    readonly id: FieldRef<"Character", 'Int'>
+    readonly name: FieldRef<"Character", 'String'>
+    readonly characterClass: FieldRef<"Character", 'String'>
+    readonly startingXp: FieldRef<"Character", 'Decimal'>
+    readonly primarySchool: FieldRef<"Character", 'String'>
+    readonly raceName: FieldRef<"Character", 'String'>
+    readonly subrace: FieldRef<"Character", 'String'>
+    readonly undoXp: FieldRef<"Character", 'Decimal'>
+    readonly discardedAt: FieldRef<"Character", 'DateTime'>
+    readonly userId: FieldRef<"Character", 'Int'>
+    readonly chapterId: FieldRef<"Character", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Character findUnique
+   */
+  export type CharacterFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Character
+     */
+    select?: CharacterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Character
+     */
+    omit?: CharacterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CharacterInclude<ExtArgs> | null
+    /**
+     * Filter, which Character to fetch.
+     */
+    where: CharacterWhereUniqueInput
+  }
+
+  /**
+   * Character findUniqueOrThrow
+   */
+  export type CharacterFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Character
+     */
+    select?: CharacterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Character
+     */
+    omit?: CharacterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CharacterInclude<ExtArgs> | null
+    /**
+     * Filter, which Character to fetch.
+     */
+    where: CharacterWhereUniqueInput
+  }
+
+  /**
+   * Character findFirst
+   */
+  export type CharacterFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Character
+     */
+    select?: CharacterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Character
+     */
+    omit?: CharacterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CharacterInclude<ExtArgs> | null
+    /**
+     * Filter, which Character to fetch.
+     */
+    where?: CharacterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Characters to fetch.
+     */
+    orderBy?: CharacterOrderByWithRelationInput | CharacterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Characters.
+     */
+    cursor?: CharacterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Characters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Characters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Characters.
+     */
+    distinct?: CharacterScalarFieldEnum | CharacterScalarFieldEnum[]
+  }
+
+  /**
+   * Character findFirstOrThrow
+   */
+  export type CharacterFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Character
+     */
+    select?: CharacterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Character
+     */
+    omit?: CharacterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CharacterInclude<ExtArgs> | null
+    /**
+     * Filter, which Character to fetch.
+     */
+    where?: CharacterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Characters to fetch.
+     */
+    orderBy?: CharacterOrderByWithRelationInput | CharacterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Characters.
+     */
+    cursor?: CharacterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Characters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Characters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Characters.
+     */
+    distinct?: CharacterScalarFieldEnum | CharacterScalarFieldEnum[]
+  }
+
+  /**
+   * Character findMany
+   */
+  export type CharacterFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Character
+     */
+    select?: CharacterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Character
+     */
+    omit?: CharacterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CharacterInclude<ExtArgs> | null
+    /**
+     * Filter, which Characters to fetch.
+     */
+    where?: CharacterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Characters to fetch.
+     */
+    orderBy?: CharacterOrderByWithRelationInput | CharacterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Characters.
+     */
+    cursor?: CharacterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Characters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Characters.
+     */
+    skip?: number
+    distinct?: CharacterScalarFieldEnum | CharacterScalarFieldEnum[]
+  }
+
+  /**
+   * Character create
+   */
+  export type CharacterCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Character
+     */
+    select?: CharacterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Character
+     */
+    omit?: CharacterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CharacterInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Character.
+     */
+    data: XOR<CharacterCreateInput, CharacterUncheckedCreateInput>
+  }
+
+  /**
+   * Character createMany
+   */
+  export type CharacterCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Characters.
+     */
+    data: CharacterCreateManyInput | CharacterCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Character createManyAndReturn
+   */
+  export type CharacterCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Character
+     */
+    select?: CharacterSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Character
+     */
+    omit?: CharacterOmit<ExtArgs> | null
+    /**
+     * The data used to create many Characters.
+     */
+    data: CharacterCreateManyInput | CharacterCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CharacterIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Character update
+   */
+  export type CharacterUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Character
+     */
+    select?: CharacterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Character
+     */
+    omit?: CharacterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CharacterInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Character.
+     */
+    data: XOR<CharacterUpdateInput, CharacterUncheckedUpdateInput>
+    /**
+     * Choose, which Character to update.
+     */
+    where: CharacterWhereUniqueInput
+  }
+
+  /**
+   * Character updateMany
+   */
+  export type CharacterUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Characters.
+     */
+    data: XOR<CharacterUpdateManyMutationInput, CharacterUncheckedUpdateManyInput>
+    /**
+     * Filter which Characters to update
+     */
+    where?: CharacterWhereInput
+    /**
+     * Limit how many Characters to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Character updateManyAndReturn
+   */
+  export type CharacterUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Character
+     */
+    select?: CharacterSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Character
+     */
+    omit?: CharacterOmit<ExtArgs> | null
+    /**
+     * The data used to update Characters.
+     */
+    data: XOR<CharacterUpdateManyMutationInput, CharacterUncheckedUpdateManyInput>
+    /**
+     * Filter which Characters to update
+     */
+    where?: CharacterWhereInput
+    /**
+     * Limit how many Characters to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CharacterIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Character upsert
+   */
+  export type CharacterUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Character
+     */
+    select?: CharacterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Character
+     */
+    omit?: CharacterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CharacterInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Character to update in case it exists.
+     */
+    where: CharacterWhereUniqueInput
+    /**
+     * In case the Character found by the `where` argument doesn't exist, create a new Character with this data.
+     */
+    create: XOR<CharacterCreateInput, CharacterUncheckedCreateInput>
+    /**
+     * In case the Character was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CharacterUpdateInput, CharacterUncheckedUpdateInput>
+  }
+
+  /**
+   * Character delete
+   */
+  export type CharacterDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Character
+     */
+    select?: CharacterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Character
+     */
+    omit?: CharacterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CharacterInclude<ExtArgs> | null
+    /**
+     * Filter which Character to delete.
+     */
+    where: CharacterWhereUniqueInput
+  }
+
+  /**
+   * Character deleteMany
+   */
+  export type CharacterDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Characters to delete
+     */
+    where?: CharacterWhereInput
+    /**
+     * Limit how many Characters to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Character without action
+   */
+  export type CharacterDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Character
+     */
+    select?: CharacterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Character
+     */
+    omit?: CharacterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CharacterInclude<ExtArgs> | null
   }
 
 
@@ -3251,6 +4627,7 @@ export namespace Prisma {
     salt: 'salt',
     firstname: 'firstname',
     lastname: 'lastname',
+    signInCount: 'signInCount',
     roles: 'roles'
   };
 
@@ -3263,6 +4640,23 @@ export namespace Prisma {
   };
 
   export type ChapterScalarFieldEnum = (typeof ChapterScalarFieldEnum)[keyof typeof ChapterScalarFieldEnum]
+
+
+  export const CharacterScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    characterClass: 'characterClass',
+    startingXp: 'startingXp',
+    primarySchool: 'primarySchool',
+    raceName: 'raceName',
+    subrace: 'subrace',
+    undoXp: 'undoXp',
+    discardedAt: 'discardedAt',
+    userId: 'userId',
+    chapterId: 'chapterId'
+  };
+
+  export type CharacterScalarFieldEnum = (typeof CharacterScalarFieldEnum)[keyof typeof CharacterScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3279,6 +4673,14 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -3343,6 +4745,34 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Decimal'
+   */
+  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+  /**
+   * Reference to a field of type 'Decimal[]'
+   */
+  export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -3369,8 +4799,10 @@ export namespace Prisma {
     salt?: BytesFilter<"User"> | Uint8Array
     firstname?: StringFilter<"User"> | string
     lastname?: StringFilter<"User"> | string
+    signInCount?: IntFilter<"User"> | number
     roles?: EnumRoleNullableListFilter<"User">
     logiChapters?: ChapterListRelationFilter
+    characters?: CharacterListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -3380,8 +4812,10 @@ export namespace Prisma {
     salt?: SortOrder
     firstname?: SortOrder
     lastname?: SortOrder
+    signInCount?: SortOrder
     roles?: SortOrder
     logiChapters?: ChapterOrderByRelationAggregateInput
+    characters?: CharacterOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -3394,8 +4828,10 @@ export namespace Prisma {
     salt?: BytesFilter<"User"> | Uint8Array
     firstname?: StringFilter<"User"> | string
     lastname?: StringFilter<"User"> | string
+    signInCount?: IntFilter<"User"> | number
     roles?: EnumRoleNullableListFilter<"User">
     logiChapters?: ChapterListRelationFilter
+    characters?: CharacterListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -3405,6 +4841,7 @@ export namespace Prisma {
     salt?: SortOrder
     firstname?: SortOrder
     lastname?: SortOrder
+    signInCount?: SortOrder
     roles?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
@@ -3423,6 +4860,7 @@ export namespace Prisma {
     salt?: BytesWithAggregatesFilter<"User"> | Uint8Array
     firstname?: StringWithAggregatesFilter<"User"> | string
     lastname?: StringWithAggregatesFilter<"User"> | string
+    signInCount?: IntWithAggregatesFilter<"User"> | number
     roles?: EnumRoleNullableListFilter<"User">
   }
 
@@ -3433,22 +4871,25 @@ export namespace Prisma {
     id?: IntFilter<"Chapter"> | number
     name?: StringFilter<"Chapter"> | string
     User?: UserListRelationFilter
+    Characters?: CharacterListRelationFilter
   }
 
   export type ChapterOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
     User?: UserOrderByRelationAggregateInput
+    Characters?: CharacterOrderByRelationAggregateInput
   }
 
   export type ChapterWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    name?: string
     AND?: ChapterWhereInput | ChapterWhereInput[]
     OR?: ChapterWhereInput[]
     NOT?: ChapterWhereInput | ChapterWhereInput[]
-    name?: StringFilter<"Chapter"> | string
     User?: UserListRelationFilter
-  }, "id">
+    Characters?: CharacterListRelationFilter
+  }, "id" | "name">
 
   export type ChapterOrderByWithAggregationInput = {
     id?: SortOrder
@@ -3468,14 +4909,106 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Chapter"> | string
   }
 
+  export type CharacterWhereInput = {
+    AND?: CharacterWhereInput | CharacterWhereInput[]
+    OR?: CharacterWhereInput[]
+    NOT?: CharacterWhereInput | CharacterWhereInput[]
+    id?: IntFilter<"Character"> | number
+    name?: StringFilter<"Character"> | string
+    characterClass?: StringFilter<"Character"> | string
+    startingXp?: DecimalFilter<"Character"> | Decimal | DecimalJsLike | number | string
+    primarySchool?: StringNullableFilter<"Character"> | string | null
+    raceName?: StringNullableFilter<"Character"> | string | null
+    subrace?: StringNullableFilter<"Character"> | string | null
+    undoXp?: DecimalFilter<"Character"> | Decimal | DecimalJsLike | number | string
+    discardedAt?: DateTimeNullableFilter<"Character"> | Date | string | null
+    userId?: IntFilter<"Character"> | number
+    chapterId?: IntFilter<"Character"> | number
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+  }
+
+  export type CharacterOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    characterClass?: SortOrder
+    startingXp?: SortOrder
+    primarySchool?: SortOrderInput | SortOrder
+    raceName?: SortOrderInput | SortOrder
+    subrace?: SortOrderInput | SortOrder
+    undoXp?: SortOrder
+    discardedAt?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    chapterId?: SortOrder
+    user?: UserOrderByWithRelationInput
+    chapter?: ChapterOrderByWithRelationInput
+  }
+
+  export type CharacterWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: CharacterWhereInput | CharacterWhereInput[]
+    OR?: CharacterWhereInput[]
+    NOT?: CharacterWhereInput | CharacterWhereInput[]
+    name?: StringFilter<"Character"> | string
+    characterClass?: StringFilter<"Character"> | string
+    startingXp?: DecimalFilter<"Character"> | Decimal | DecimalJsLike | number | string
+    primarySchool?: StringNullableFilter<"Character"> | string | null
+    raceName?: StringNullableFilter<"Character"> | string | null
+    subrace?: StringNullableFilter<"Character"> | string | null
+    undoXp?: DecimalFilter<"Character"> | Decimal | DecimalJsLike | number | string
+    discardedAt?: DateTimeNullableFilter<"Character"> | Date | string | null
+    userId?: IntFilter<"Character"> | number
+    chapterId?: IntFilter<"Character"> | number
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+  }, "id">
+
+  export type CharacterOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    characterClass?: SortOrder
+    startingXp?: SortOrder
+    primarySchool?: SortOrderInput | SortOrder
+    raceName?: SortOrderInput | SortOrder
+    subrace?: SortOrderInput | SortOrder
+    undoXp?: SortOrder
+    discardedAt?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    chapterId?: SortOrder
+    _count?: CharacterCountOrderByAggregateInput
+    _avg?: CharacterAvgOrderByAggregateInput
+    _max?: CharacterMaxOrderByAggregateInput
+    _min?: CharacterMinOrderByAggregateInput
+    _sum?: CharacterSumOrderByAggregateInput
+  }
+
+  export type CharacterScalarWhereWithAggregatesInput = {
+    AND?: CharacterScalarWhereWithAggregatesInput | CharacterScalarWhereWithAggregatesInput[]
+    OR?: CharacterScalarWhereWithAggregatesInput[]
+    NOT?: CharacterScalarWhereWithAggregatesInput | CharacterScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Character"> | number
+    name?: StringWithAggregatesFilter<"Character"> | string
+    characterClass?: StringWithAggregatesFilter<"Character"> | string
+    startingXp?: DecimalWithAggregatesFilter<"Character"> | Decimal | DecimalJsLike | number | string
+    primarySchool?: StringNullableWithAggregatesFilter<"Character"> | string | null
+    raceName?: StringNullableWithAggregatesFilter<"Character"> | string | null
+    subrace?: StringNullableWithAggregatesFilter<"Character"> | string | null
+    undoXp?: DecimalWithAggregatesFilter<"Character"> | Decimal | DecimalJsLike | number | string
+    discardedAt?: DateTimeNullableWithAggregatesFilter<"Character"> | Date | string | null
+    userId?: IntWithAggregatesFilter<"Character"> | number
+    chapterId?: IntWithAggregatesFilter<"Character"> | number
+  }
+
   export type UserCreateInput = {
     email: string
     password: Uint8Array
     salt: Uint8Array
     firstname: string
     lastname: string
+    signInCount?: number
     roles?: UserCreaterolesInput | $Enums.Role[]
     logiChapters?: ChapterCreateNestedManyWithoutUserInput
+    characters?: CharacterCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -3485,8 +5018,10 @@ export namespace Prisma {
     salt: Uint8Array
     firstname: string
     lastname: string
+    signInCount?: number
     roles?: UserCreaterolesInput | $Enums.Role[]
     logiChapters?: ChapterUncheckedCreateNestedManyWithoutUserInput
+    characters?: CharacterUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -3495,8 +5030,10 @@ export namespace Prisma {
     salt?: BytesFieldUpdateOperationsInput | Uint8Array
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
+    signInCount?: IntFieldUpdateOperationsInput | number
     roles?: UserUpdaterolesInput | $Enums.Role[]
     logiChapters?: ChapterUpdateManyWithoutUserNestedInput
+    characters?: CharacterUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -3506,8 +5043,10 @@ export namespace Prisma {
     salt?: BytesFieldUpdateOperationsInput | Uint8Array
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
+    signInCount?: IntFieldUpdateOperationsInput | number
     roles?: UserUpdaterolesInput | $Enums.Role[]
     logiChapters?: ChapterUncheckedUpdateManyWithoutUserNestedInput
+    characters?: CharacterUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -3517,6 +5056,7 @@ export namespace Prisma {
     salt: Uint8Array
     firstname: string
     lastname: string
+    signInCount?: number
     roles?: UserCreaterolesInput | $Enums.Role[]
   }
 
@@ -3526,6 +5066,7 @@ export namespace Prisma {
     salt?: BytesFieldUpdateOperationsInput | Uint8Array
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
+    signInCount?: IntFieldUpdateOperationsInput | number
     roles?: UserUpdaterolesInput | $Enums.Role[]
   }
 
@@ -3536,29 +5077,34 @@ export namespace Prisma {
     salt?: BytesFieldUpdateOperationsInput | Uint8Array
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
+    signInCount?: IntFieldUpdateOperationsInput | number
     roles?: UserUpdaterolesInput | $Enums.Role[]
   }
 
   export type ChapterCreateInput = {
     name: string
     User?: UserCreateNestedManyWithoutLogiChaptersInput
+    Characters?: CharacterCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateInput = {
     id?: number
     name: string
     User?: UserUncheckedCreateNestedManyWithoutLogiChaptersInput
+    Characters?: CharacterUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     User?: UserUpdateManyWithoutLogiChaptersNestedInput
+    Characters?: CharacterUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     User?: UserUncheckedUpdateManyWithoutLogiChaptersNestedInput
+    Characters?: CharacterUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterCreateManyInput = {
@@ -3573,6 +5119,99 @@ export namespace Prisma {
   export type ChapterUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CharacterCreateInput = {
+    name: string
+    characterClass: string
+    startingXp?: Decimal | DecimalJsLike | number | string
+    primarySchool?: string | null
+    raceName?: string | null
+    subrace?: string | null
+    undoXp?: Decimal | DecimalJsLike | number | string
+    discardedAt?: Date | string | null
+    user: UserCreateNestedOneWithoutCharactersInput
+    chapter: ChapterCreateNestedOneWithoutCharactersInput
+  }
+
+  export type CharacterUncheckedCreateInput = {
+    id?: number
+    name: string
+    characterClass: string
+    startingXp?: Decimal | DecimalJsLike | number | string
+    primarySchool?: string | null
+    raceName?: string | null
+    subrace?: string | null
+    undoXp?: Decimal | DecimalJsLike | number | string
+    discardedAt?: Date | string | null
+    userId: number
+    chapterId: number
+  }
+
+  export type CharacterUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    characterClass?: StringFieldUpdateOperationsInput | string
+    startingXp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    primarySchool?: NullableStringFieldUpdateOperationsInput | string | null
+    raceName?: NullableStringFieldUpdateOperationsInput | string | null
+    subrace?: NullableStringFieldUpdateOperationsInput | string | null
+    undoXp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    discardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user?: UserUpdateOneRequiredWithoutCharactersNestedInput
+    chapter?: ChapterUpdateOneRequiredWithoutCharactersNestedInput
+  }
+
+  export type CharacterUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    characterClass?: StringFieldUpdateOperationsInput | string
+    startingXp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    primarySchool?: NullableStringFieldUpdateOperationsInput | string | null
+    raceName?: NullableStringFieldUpdateOperationsInput | string | null
+    subrace?: NullableStringFieldUpdateOperationsInput | string | null
+    undoXp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    discardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userId?: IntFieldUpdateOperationsInput | number
+    chapterId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type CharacterCreateManyInput = {
+    id?: number
+    name: string
+    characterClass: string
+    startingXp?: Decimal | DecimalJsLike | number | string
+    primarySchool?: string | null
+    raceName?: string | null
+    subrace?: string | null
+    undoXp?: Decimal | DecimalJsLike | number | string
+    discardedAt?: Date | string | null
+    userId: number
+    chapterId: number
+  }
+
+  export type CharacterUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    characterClass?: StringFieldUpdateOperationsInput | string
+    startingXp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    primarySchool?: NullableStringFieldUpdateOperationsInput | string | null
+    raceName?: NullableStringFieldUpdateOperationsInput | string | null
+    subrace?: NullableStringFieldUpdateOperationsInput | string | null
+    undoXp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    discardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type CharacterUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    characterClass?: StringFieldUpdateOperationsInput | string
+    startingXp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    primarySchool?: NullableStringFieldUpdateOperationsInput | string | null
+    raceName?: NullableStringFieldUpdateOperationsInput | string | null
+    subrace?: NullableStringFieldUpdateOperationsInput | string | null
+    undoXp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    discardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userId?: IntFieldUpdateOperationsInput | number
+    chapterId?: IntFieldUpdateOperationsInput | number
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -3622,7 +5261,17 @@ export namespace Prisma {
     none?: ChapterWhereInput
   }
 
+  export type CharacterListRelationFilter = {
+    every?: CharacterWhereInput
+    some?: CharacterWhereInput
+    none?: CharacterWhereInput
+  }
+
   export type ChapterOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CharacterOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -3633,11 +5282,13 @@ export namespace Prisma {
     salt?: SortOrder
     firstname?: SortOrder
     lastname?: SortOrder
+    signInCount?: SortOrder
     roles?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
     id?: SortOrder
+    signInCount?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -3647,6 +5298,7 @@ export namespace Prisma {
     salt?: SortOrder
     firstname?: SortOrder
     lastname?: SortOrder
+    signInCount?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -3656,10 +5308,12 @@ export namespace Prisma {
     salt?: SortOrder
     firstname?: SortOrder
     lastname?: SortOrder
+    signInCount?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
     id?: SortOrder
+    signInCount?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -3739,6 +5393,164 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type DecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type ChapterScalarRelationFilter = {
+    is?: ChapterWhereInput
+    isNot?: ChapterWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type CharacterCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    characterClass?: SortOrder
+    startingXp?: SortOrder
+    primarySchool?: SortOrder
+    raceName?: SortOrder
+    subrace?: SortOrder
+    undoXp?: SortOrder
+    discardedAt?: SortOrder
+    userId?: SortOrder
+    chapterId?: SortOrder
+  }
+
+  export type CharacterAvgOrderByAggregateInput = {
+    id?: SortOrder
+    startingXp?: SortOrder
+    undoXp?: SortOrder
+    userId?: SortOrder
+    chapterId?: SortOrder
+  }
+
+  export type CharacterMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    characterClass?: SortOrder
+    startingXp?: SortOrder
+    primarySchool?: SortOrder
+    raceName?: SortOrder
+    subrace?: SortOrder
+    undoXp?: SortOrder
+    discardedAt?: SortOrder
+    userId?: SortOrder
+    chapterId?: SortOrder
+  }
+
+  export type CharacterMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    characterClass?: SortOrder
+    startingXp?: SortOrder
+    primarySchool?: SortOrder
+    raceName?: SortOrder
+    subrace?: SortOrder
+    undoXp?: SortOrder
+    discardedAt?: SortOrder
+    userId?: SortOrder
+    chapterId?: SortOrder
+  }
+
+  export type CharacterSumOrderByAggregateInput = {
+    id?: SortOrder
+    startingXp?: SortOrder
+    undoXp?: SortOrder
+    userId?: SortOrder
+    chapterId?: SortOrder
+  }
+
+  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type UserCreaterolesInput = {
     set: $Enums.Role[]
   }
@@ -3749,10 +5561,24 @@ export namespace Prisma {
     connect?: ChapterWhereUniqueInput | ChapterWhereUniqueInput[]
   }
 
+  export type CharacterCreateNestedManyWithoutUserInput = {
+    create?: XOR<CharacterCreateWithoutUserInput, CharacterUncheckedCreateWithoutUserInput> | CharacterCreateWithoutUserInput[] | CharacterUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CharacterCreateOrConnectWithoutUserInput | CharacterCreateOrConnectWithoutUserInput[]
+    createMany?: CharacterCreateManyUserInputEnvelope
+    connect?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+  }
+
   export type ChapterUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<ChapterCreateWithoutUserInput, ChapterUncheckedCreateWithoutUserInput> | ChapterCreateWithoutUserInput[] | ChapterUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ChapterCreateOrConnectWithoutUserInput | ChapterCreateOrConnectWithoutUserInput[]
     connect?: ChapterWhereUniqueInput | ChapterWhereUniqueInput[]
+  }
+
+  export type CharacterUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<CharacterCreateWithoutUserInput, CharacterUncheckedCreateWithoutUserInput> | CharacterCreateWithoutUserInput[] | CharacterUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CharacterCreateOrConnectWithoutUserInput | CharacterCreateOrConnectWithoutUserInput[]
+    createMany?: CharacterCreateManyUserInputEnvelope
+    connect?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -3761,6 +5587,14 @@ export namespace Prisma {
 
   export type BytesFieldUpdateOperationsInput = {
     set?: Uint8Array
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type UserUpdaterolesInput = {
@@ -3781,12 +5615,18 @@ export namespace Prisma {
     deleteMany?: ChapterScalarWhereInput | ChapterScalarWhereInput[]
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type CharacterUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CharacterCreateWithoutUserInput, CharacterUncheckedCreateWithoutUserInput> | CharacterCreateWithoutUserInput[] | CharacterUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CharacterCreateOrConnectWithoutUserInput | CharacterCreateOrConnectWithoutUserInput[]
+    upsert?: CharacterUpsertWithWhereUniqueWithoutUserInput | CharacterUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CharacterCreateManyUserInputEnvelope
+    set?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    disconnect?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    delete?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    connect?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    update?: CharacterUpdateWithWhereUniqueWithoutUserInput | CharacterUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CharacterUpdateManyWithWhereWithoutUserInput | CharacterUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CharacterScalarWhereInput | CharacterScalarWhereInput[]
   }
 
   export type ChapterUncheckedUpdateManyWithoutUserNestedInput = {
@@ -3802,16 +5642,44 @@ export namespace Prisma {
     deleteMany?: ChapterScalarWhereInput | ChapterScalarWhereInput[]
   }
 
+  export type CharacterUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CharacterCreateWithoutUserInput, CharacterUncheckedCreateWithoutUserInput> | CharacterCreateWithoutUserInput[] | CharacterUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CharacterCreateOrConnectWithoutUserInput | CharacterCreateOrConnectWithoutUserInput[]
+    upsert?: CharacterUpsertWithWhereUniqueWithoutUserInput | CharacterUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CharacterCreateManyUserInputEnvelope
+    set?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    disconnect?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    delete?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    connect?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    update?: CharacterUpdateWithWhereUniqueWithoutUserInput | CharacterUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CharacterUpdateManyWithWhereWithoutUserInput | CharacterUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CharacterScalarWhereInput | CharacterScalarWhereInput[]
+  }
+
   export type UserCreateNestedManyWithoutLogiChaptersInput = {
     create?: XOR<UserCreateWithoutLogiChaptersInput, UserUncheckedCreateWithoutLogiChaptersInput> | UserCreateWithoutLogiChaptersInput[] | UserUncheckedCreateWithoutLogiChaptersInput[]
     connectOrCreate?: UserCreateOrConnectWithoutLogiChaptersInput | UserCreateOrConnectWithoutLogiChaptersInput[]
     connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
   }
 
+  export type CharacterCreateNestedManyWithoutChapterInput = {
+    create?: XOR<CharacterCreateWithoutChapterInput, CharacterUncheckedCreateWithoutChapterInput> | CharacterCreateWithoutChapterInput[] | CharacterUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: CharacterCreateOrConnectWithoutChapterInput | CharacterCreateOrConnectWithoutChapterInput[]
+    createMany?: CharacterCreateManyChapterInputEnvelope
+    connect?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+  }
+
   export type UserUncheckedCreateNestedManyWithoutLogiChaptersInput = {
     create?: XOR<UserCreateWithoutLogiChaptersInput, UserUncheckedCreateWithoutLogiChaptersInput> | UserCreateWithoutLogiChaptersInput[] | UserUncheckedCreateWithoutLogiChaptersInput[]
     connectOrCreate?: UserCreateOrConnectWithoutLogiChaptersInput | UserCreateOrConnectWithoutLogiChaptersInput[]
     connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type CharacterUncheckedCreateNestedManyWithoutChapterInput = {
+    create?: XOR<CharacterCreateWithoutChapterInput, CharacterUncheckedCreateWithoutChapterInput> | CharacterCreateWithoutChapterInput[] | CharacterUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: CharacterCreateOrConnectWithoutChapterInput | CharacterCreateOrConnectWithoutChapterInput[]
+    createMany?: CharacterCreateManyChapterInputEnvelope
+    connect?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
   }
 
   export type UserUpdateManyWithoutLogiChaptersNestedInput = {
@@ -3827,6 +5695,20 @@ export namespace Prisma {
     deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
+  export type CharacterUpdateManyWithoutChapterNestedInput = {
+    create?: XOR<CharacterCreateWithoutChapterInput, CharacterUncheckedCreateWithoutChapterInput> | CharacterCreateWithoutChapterInput[] | CharacterUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: CharacterCreateOrConnectWithoutChapterInput | CharacterCreateOrConnectWithoutChapterInput[]
+    upsert?: CharacterUpsertWithWhereUniqueWithoutChapterInput | CharacterUpsertWithWhereUniqueWithoutChapterInput[]
+    createMany?: CharacterCreateManyChapterInputEnvelope
+    set?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    disconnect?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    delete?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    connect?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    update?: CharacterUpdateWithWhereUniqueWithoutChapterInput | CharacterUpdateWithWhereUniqueWithoutChapterInput[]
+    updateMany?: CharacterUpdateManyWithWhereWithoutChapterInput | CharacterUpdateManyWithWhereWithoutChapterInput[]
+    deleteMany?: CharacterScalarWhereInput | CharacterScalarWhereInput[]
+  }
+
   export type UserUncheckedUpdateManyWithoutLogiChaptersNestedInput = {
     create?: XOR<UserCreateWithoutLogiChaptersInput, UserUncheckedCreateWithoutLogiChaptersInput> | UserCreateWithoutLogiChaptersInput[] | UserUncheckedCreateWithoutLogiChaptersInput[]
     connectOrCreate?: UserCreateOrConnectWithoutLogiChaptersInput | UserCreateOrConnectWithoutLogiChaptersInput[]
@@ -3838,6 +5720,64 @@ export namespace Prisma {
     update?: UserUpdateWithWhereUniqueWithoutLogiChaptersInput | UserUpdateWithWhereUniqueWithoutLogiChaptersInput[]
     updateMany?: UserUpdateManyWithWhereWithoutLogiChaptersInput | UserUpdateManyWithWhereWithoutLogiChaptersInput[]
     deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type CharacterUncheckedUpdateManyWithoutChapterNestedInput = {
+    create?: XOR<CharacterCreateWithoutChapterInput, CharacterUncheckedCreateWithoutChapterInput> | CharacterCreateWithoutChapterInput[] | CharacterUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: CharacterCreateOrConnectWithoutChapterInput | CharacterCreateOrConnectWithoutChapterInput[]
+    upsert?: CharacterUpsertWithWhereUniqueWithoutChapterInput | CharacterUpsertWithWhereUniqueWithoutChapterInput[]
+    createMany?: CharacterCreateManyChapterInputEnvelope
+    set?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    disconnect?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    delete?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    connect?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    update?: CharacterUpdateWithWhereUniqueWithoutChapterInput | CharacterUpdateWithWhereUniqueWithoutChapterInput[]
+    updateMany?: CharacterUpdateManyWithWhereWithoutChapterInput | CharacterUpdateManyWithWhereWithoutChapterInput[]
+    deleteMany?: CharacterScalarWhereInput | CharacterScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutCharactersInput = {
+    create?: XOR<UserCreateWithoutCharactersInput, UserUncheckedCreateWithoutCharactersInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCharactersInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ChapterCreateNestedOneWithoutCharactersInput = {
+    create?: XOR<ChapterCreateWithoutCharactersInput, ChapterUncheckedCreateWithoutCharactersInput>
+    connectOrCreate?: ChapterCreateOrConnectWithoutCharactersInput
+    connect?: ChapterWhereUniqueInput
+  }
+
+  export type DecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type UserUpdateOneRequiredWithoutCharactersNestedInput = {
+    create?: XOR<UserCreateWithoutCharactersInput, UserUncheckedCreateWithoutCharactersInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCharactersInput
+    upsert?: UserUpsertWithoutCharactersInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCharactersInput, UserUpdateWithoutCharactersInput>, UserUncheckedUpdateWithoutCharactersInput>
+  }
+
+  export type ChapterUpdateOneRequiredWithoutCharactersNestedInput = {
+    create?: XOR<ChapterCreateWithoutCharactersInput, ChapterUncheckedCreateWithoutCharactersInput>
+    connectOrCreate?: ChapterCreateOrConnectWithoutCharactersInput
+    upsert?: ChapterUpsertWithoutCharactersInput
+    connect?: ChapterWhereUniqueInput
+    update?: XOR<XOR<ChapterUpdateToOneWithWhereWithoutCharactersInput, ChapterUpdateWithoutCharactersInput>, ChapterUncheckedUpdateWithoutCharactersInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -3926,18 +5866,149 @@ export namespace Prisma {
     _max?: NestedBytesFilter<$PrismaModel>
   }
 
+  export type NestedDecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type ChapterCreateWithoutUserInput = {
     name: string
+    Characters?: CharacterCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutUserInput = {
     id?: number
     name: string
+    Characters?: CharacterUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutUserInput = {
     where: ChapterWhereUniqueInput
     create: XOR<ChapterCreateWithoutUserInput, ChapterUncheckedCreateWithoutUserInput>
+  }
+
+  export type CharacterCreateWithoutUserInput = {
+    name: string
+    characterClass: string
+    startingXp?: Decimal | DecimalJsLike | number | string
+    primarySchool?: string | null
+    raceName?: string | null
+    subrace?: string | null
+    undoXp?: Decimal | DecimalJsLike | number | string
+    discardedAt?: Date | string | null
+    chapter: ChapterCreateNestedOneWithoutCharactersInput
+  }
+
+  export type CharacterUncheckedCreateWithoutUserInput = {
+    id?: number
+    name: string
+    characterClass: string
+    startingXp?: Decimal | DecimalJsLike | number | string
+    primarySchool?: string | null
+    raceName?: string | null
+    subrace?: string | null
+    undoXp?: Decimal | DecimalJsLike | number | string
+    discardedAt?: Date | string | null
+    chapterId: number
+  }
+
+  export type CharacterCreateOrConnectWithoutUserInput = {
+    where: CharacterWhereUniqueInput
+    create: XOR<CharacterCreateWithoutUserInput, CharacterUncheckedCreateWithoutUserInput>
+  }
+
+  export type CharacterCreateManyUserInputEnvelope = {
+    data: CharacterCreateManyUserInput | CharacterCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
   export type ChapterUpsertWithWhereUniqueWithoutUserInput = {
@@ -3964,13 +6035,48 @@ export namespace Prisma {
     name?: StringFilter<"Chapter"> | string
   }
 
+  export type CharacterUpsertWithWhereUniqueWithoutUserInput = {
+    where: CharacterWhereUniqueInput
+    update: XOR<CharacterUpdateWithoutUserInput, CharacterUncheckedUpdateWithoutUserInput>
+    create: XOR<CharacterCreateWithoutUserInput, CharacterUncheckedCreateWithoutUserInput>
+  }
+
+  export type CharacterUpdateWithWhereUniqueWithoutUserInput = {
+    where: CharacterWhereUniqueInput
+    data: XOR<CharacterUpdateWithoutUserInput, CharacterUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CharacterUpdateManyWithWhereWithoutUserInput = {
+    where: CharacterScalarWhereInput
+    data: XOR<CharacterUpdateManyMutationInput, CharacterUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type CharacterScalarWhereInput = {
+    AND?: CharacterScalarWhereInput | CharacterScalarWhereInput[]
+    OR?: CharacterScalarWhereInput[]
+    NOT?: CharacterScalarWhereInput | CharacterScalarWhereInput[]
+    id?: IntFilter<"Character"> | number
+    name?: StringFilter<"Character"> | string
+    characterClass?: StringFilter<"Character"> | string
+    startingXp?: DecimalFilter<"Character"> | Decimal | DecimalJsLike | number | string
+    primarySchool?: StringNullableFilter<"Character"> | string | null
+    raceName?: StringNullableFilter<"Character"> | string | null
+    subrace?: StringNullableFilter<"Character"> | string | null
+    undoXp?: DecimalFilter<"Character"> | Decimal | DecimalJsLike | number | string
+    discardedAt?: DateTimeNullableFilter<"Character"> | Date | string | null
+    userId?: IntFilter<"Character"> | number
+    chapterId?: IntFilter<"Character"> | number
+  }
+
   export type UserCreateWithoutLogiChaptersInput = {
     email: string
     password: Uint8Array
     salt: Uint8Array
     firstname: string
     lastname: string
+    signInCount?: number
     roles?: UserCreaterolesInput | $Enums.Role[]
+    characters?: CharacterCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutLogiChaptersInput = {
@@ -3980,12 +6086,49 @@ export namespace Prisma {
     salt: Uint8Array
     firstname: string
     lastname: string
+    signInCount?: number
     roles?: UserCreaterolesInput | $Enums.Role[]
+    characters?: CharacterUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutLogiChaptersInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutLogiChaptersInput, UserUncheckedCreateWithoutLogiChaptersInput>
+  }
+
+  export type CharacterCreateWithoutChapterInput = {
+    name: string
+    characterClass: string
+    startingXp?: Decimal | DecimalJsLike | number | string
+    primarySchool?: string | null
+    raceName?: string | null
+    subrace?: string | null
+    undoXp?: Decimal | DecimalJsLike | number | string
+    discardedAt?: Date | string | null
+    user: UserCreateNestedOneWithoutCharactersInput
+  }
+
+  export type CharacterUncheckedCreateWithoutChapterInput = {
+    id?: number
+    name: string
+    characterClass: string
+    startingXp?: Decimal | DecimalJsLike | number | string
+    primarySchool?: string | null
+    raceName?: string | null
+    subrace?: string | null
+    undoXp?: Decimal | DecimalJsLike | number | string
+    discardedAt?: Date | string | null
+    userId: number
+  }
+
+  export type CharacterCreateOrConnectWithoutChapterInput = {
+    where: CharacterWhereUniqueInput
+    create: XOR<CharacterCreateWithoutChapterInput, CharacterUncheckedCreateWithoutChapterInput>
+  }
+
+  export type CharacterCreateManyChapterInputEnvelope = {
+    data: CharacterCreateManyChapterInput | CharacterCreateManyChapterInput[]
+    skipDuplicates?: boolean
   }
 
   export type UserUpsertWithWhereUniqueWithoutLogiChaptersInput = {
@@ -4014,21 +6157,204 @@ export namespace Prisma {
     salt?: BytesFilter<"User"> | Uint8Array
     firstname?: StringFilter<"User"> | string
     lastname?: StringFilter<"User"> | string
+    signInCount?: IntFilter<"User"> | number
     roles?: EnumRoleNullableListFilter<"User">
+  }
+
+  export type CharacterUpsertWithWhereUniqueWithoutChapterInput = {
+    where: CharacterWhereUniqueInput
+    update: XOR<CharacterUpdateWithoutChapterInput, CharacterUncheckedUpdateWithoutChapterInput>
+    create: XOR<CharacterCreateWithoutChapterInput, CharacterUncheckedCreateWithoutChapterInput>
+  }
+
+  export type CharacterUpdateWithWhereUniqueWithoutChapterInput = {
+    where: CharacterWhereUniqueInput
+    data: XOR<CharacterUpdateWithoutChapterInput, CharacterUncheckedUpdateWithoutChapterInput>
+  }
+
+  export type CharacterUpdateManyWithWhereWithoutChapterInput = {
+    where: CharacterScalarWhereInput
+    data: XOR<CharacterUpdateManyMutationInput, CharacterUncheckedUpdateManyWithoutChapterInput>
+  }
+
+  export type UserCreateWithoutCharactersInput = {
+    email: string
+    password: Uint8Array
+    salt: Uint8Array
+    firstname: string
+    lastname: string
+    signInCount?: number
+    roles?: UserCreaterolesInput | $Enums.Role[]
+    logiChapters?: ChapterCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCharactersInput = {
+    id?: number
+    email: string
+    password: Uint8Array
+    salt: Uint8Array
+    firstname: string
+    lastname: string
+    signInCount?: number
+    roles?: UserCreaterolesInput | $Enums.Role[]
+    logiChapters?: ChapterUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCharactersInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCharactersInput, UserUncheckedCreateWithoutCharactersInput>
+  }
+
+  export type ChapterCreateWithoutCharactersInput = {
+    name: string
+    User?: UserCreateNestedManyWithoutLogiChaptersInput
+  }
+
+  export type ChapterUncheckedCreateWithoutCharactersInput = {
+    id?: number
+    name: string
+    User?: UserUncheckedCreateNestedManyWithoutLogiChaptersInput
+  }
+
+  export type ChapterCreateOrConnectWithoutCharactersInput = {
+    where: ChapterWhereUniqueInput
+    create: XOR<ChapterCreateWithoutCharactersInput, ChapterUncheckedCreateWithoutCharactersInput>
+  }
+
+  export type UserUpsertWithoutCharactersInput = {
+    update: XOR<UserUpdateWithoutCharactersInput, UserUncheckedUpdateWithoutCharactersInput>
+    create: XOR<UserCreateWithoutCharactersInput, UserUncheckedCreateWithoutCharactersInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCharactersInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCharactersInput, UserUncheckedUpdateWithoutCharactersInput>
+  }
+
+  export type UserUpdateWithoutCharactersInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    password?: BytesFieldUpdateOperationsInput | Uint8Array
+    salt?: BytesFieldUpdateOperationsInput | Uint8Array
+    firstname?: StringFieldUpdateOperationsInput | string
+    lastname?: StringFieldUpdateOperationsInput | string
+    signInCount?: IntFieldUpdateOperationsInput | number
+    roles?: UserUpdaterolesInput | $Enums.Role[]
+    logiChapters?: ChapterUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCharactersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    password?: BytesFieldUpdateOperationsInput | Uint8Array
+    salt?: BytesFieldUpdateOperationsInput | Uint8Array
+    firstname?: StringFieldUpdateOperationsInput | string
+    lastname?: StringFieldUpdateOperationsInput | string
+    signInCount?: IntFieldUpdateOperationsInput | number
+    roles?: UserUpdaterolesInput | $Enums.Role[]
+    logiChapters?: ChapterUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ChapterUpsertWithoutCharactersInput = {
+    update: XOR<ChapterUpdateWithoutCharactersInput, ChapterUncheckedUpdateWithoutCharactersInput>
+    create: XOR<ChapterCreateWithoutCharactersInput, ChapterUncheckedCreateWithoutCharactersInput>
+    where?: ChapterWhereInput
+  }
+
+  export type ChapterUpdateToOneWithWhereWithoutCharactersInput = {
+    where?: ChapterWhereInput
+    data: XOR<ChapterUpdateWithoutCharactersInput, ChapterUncheckedUpdateWithoutCharactersInput>
+  }
+
+  export type ChapterUpdateWithoutCharactersInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    User?: UserUpdateManyWithoutLogiChaptersNestedInput
+  }
+
+  export type ChapterUncheckedUpdateWithoutCharactersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    User?: UserUncheckedUpdateManyWithoutLogiChaptersNestedInput
+  }
+
+  export type CharacterCreateManyUserInput = {
+    id?: number
+    name: string
+    characterClass: string
+    startingXp?: Decimal | DecimalJsLike | number | string
+    primarySchool?: string | null
+    raceName?: string | null
+    subrace?: string | null
+    undoXp?: Decimal | DecimalJsLike | number | string
+    discardedAt?: Date | string | null
+    chapterId: number
   }
 
   export type ChapterUpdateWithoutUserInput = {
     name?: StringFieldUpdateOperationsInput | string
+    Characters?: CharacterUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    Characters?: CharacterUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CharacterUpdateWithoutUserInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    characterClass?: StringFieldUpdateOperationsInput | string
+    startingXp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    primarySchool?: NullableStringFieldUpdateOperationsInput | string | null
+    raceName?: NullableStringFieldUpdateOperationsInput | string | null
+    subrace?: NullableStringFieldUpdateOperationsInput | string | null
+    undoXp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    discardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chapter?: ChapterUpdateOneRequiredWithoutCharactersNestedInput
+  }
+
+  export type CharacterUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    characterClass?: StringFieldUpdateOperationsInput | string
+    startingXp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    primarySchool?: NullableStringFieldUpdateOperationsInput | string | null
+    raceName?: NullableStringFieldUpdateOperationsInput | string | null
+    subrace?: NullableStringFieldUpdateOperationsInput | string | null
+    undoXp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    discardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chapterId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type CharacterUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    characterClass?: StringFieldUpdateOperationsInput | string
+    startingXp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    primarySchool?: NullableStringFieldUpdateOperationsInput | string | null
+    raceName?: NullableStringFieldUpdateOperationsInput | string | null
+    subrace?: NullableStringFieldUpdateOperationsInput | string | null
+    undoXp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    discardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chapterId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type CharacterCreateManyChapterInput = {
+    id?: number
+    name: string
+    characterClass: string
+    startingXp?: Decimal | DecimalJsLike | number | string
+    primarySchool?: string | null
+    raceName?: string | null
+    subrace?: string | null
+    undoXp?: Decimal | DecimalJsLike | number | string
+    discardedAt?: Date | string | null
+    userId: number
   }
 
   export type UserUpdateWithoutLogiChaptersInput = {
@@ -4037,7 +6363,9 @@ export namespace Prisma {
     salt?: BytesFieldUpdateOperationsInput | Uint8Array
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
+    signInCount?: IntFieldUpdateOperationsInput | number
     roles?: UserUpdaterolesInput | $Enums.Role[]
+    characters?: CharacterUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutLogiChaptersInput = {
@@ -4047,7 +6375,9 @@ export namespace Prisma {
     salt?: BytesFieldUpdateOperationsInput | Uint8Array
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
+    signInCount?: IntFieldUpdateOperationsInput | number
     roles?: UserUpdaterolesInput | $Enums.Role[]
+    characters?: CharacterUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutLogiChaptersInput = {
@@ -4057,7 +6387,46 @@ export namespace Prisma {
     salt?: BytesFieldUpdateOperationsInput | Uint8Array
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
+    signInCount?: IntFieldUpdateOperationsInput | number
     roles?: UserUpdaterolesInput | $Enums.Role[]
+  }
+
+  export type CharacterUpdateWithoutChapterInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    characterClass?: StringFieldUpdateOperationsInput | string
+    startingXp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    primarySchool?: NullableStringFieldUpdateOperationsInput | string | null
+    raceName?: NullableStringFieldUpdateOperationsInput | string | null
+    subrace?: NullableStringFieldUpdateOperationsInput | string | null
+    undoXp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    discardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user?: UserUpdateOneRequiredWithoutCharactersNestedInput
+  }
+
+  export type CharacterUncheckedUpdateWithoutChapterInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    characterClass?: StringFieldUpdateOperationsInput | string
+    startingXp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    primarySchool?: NullableStringFieldUpdateOperationsInput | string | null
+    raceName?: NullableStringFieldUpdateOperationsInput | string | null
+    subrace?: NullableStringFieldUpdateOperationsInput | string | null
+    undoXp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    discardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type CharacterUncheckedUpdateManyWithoutChapterInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    characterClass?: StringFieldUpdateOperationsInput | string
+    startingXp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    primarySchool?: NullableStringFieldUpdateOperationsInput | string | null
+    raceName?: NullableStringFieldUpdateOperationsInput | string | null
+    subrace?: NullableStringFieldUpdateOperationsInput | string | null
+    undoXp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    discardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userId?: IntFieldUpdateOperationsInput | number
   }
 
 

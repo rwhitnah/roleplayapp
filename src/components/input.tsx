@@ -1,4 +1,3 @@
-import * as Headless from '@headlessui/react'
 import clsx from 'clsx'
 
 export function InputGroup({ children }: any) {
@@ -28,7 +27,7 @@ export const Input = (
   }: {
     className?: string
     type?: 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | DateType
-  } & Omit<Headless.InputProps, 'as' | 'className'>,
+  } & any,
   ref: any
 ) => {
   return (
@@ -50,7 +49,7 @@ export const Input = (
         'has-data-invalid:before:shadow-red-500/10',
       ])}
     >
-      <Headless.Input
+      <input
         ref={ref}
         {...props}
         className={clsx([

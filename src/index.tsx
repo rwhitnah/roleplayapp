@@ -9,11 +9,17 @@ import { PrismaClient, Role } from '../generated/prisma/index.js'
 import { Login } from './frontend/login.js'
 import { Signup } from './frontend/signup.js'
 import { Reset } from './frontend/reset.js'
+import { NewCharacter } from './frontend/characters/new.js'
+import { ShowCharacter } from './frontend/characters/show.js'
 
 const prisma = new PrismaClient()
 
 type Variables = {
-  user: any
+  user: any,
+  characters: {
+    name: string,
+    id: number
+  }[]
 }
 
 const app = new Hono<{ Variables: Variables }>()
@@ -25,7 +31,16 @@ app.use('*', async (c, next) => {
   if (userCookie) {
     const user = await verify(userCookie, 'mySecretKey')
     c.set('user', user);
+
+    const characters = await prisma.character.findMany({
+      where: {
+        userId: Number(user.id)
+      }
+    })
+
+    c.set('characters', characters.map((char) => {return {name: char.name, id: char.id}}))
     console.log(c.var.user)
+    console.log(c.var.characters)
   }
 
   await next();
@@ -43,7 +58,7 @@ app.get('/login', (c) => {
   if (c.var.user) {
     return c.redirect('/')
   }
-  return c.html(<Login user={c.var.user}/>)
+  return c.html(<Login user={c.var.user} characters={c.var.characters}/>)
 })
 
 app.post('/login', async (c) => {
@@ -90,7 +105,7 @@ app.get('/signup', (c) => {
   if (c.var.user) {
     return c.redirect('/')
   }
-  return c.html(<Signup user={c.var.user}/>)
+  return c.html(<Signup user={c.var.user} characters={c.var.characters}/>)
 })
 
 app.post('/signup', async (c) => {
@@ -151,7 +166,7 @@ app.get('/logout', (c) => {
 
 app.get('/reset', secured)
 app.get('/reset', (c) => {
-  return c.html(<Reset user={c.var.user}/>)
+  return c.html(<Reset user={c.var.user} characters={c.var.characters}/>)
 })
 
 app.post('/reset', async (c) => {
@@ -174,10 +189,48 @@ app.post('/reset', async (c) => {
   return c.redirect('/')
 });
 
+app.get('/characters/new', secured)
+app.get('/characters/new', async (c) => {
+  const chapters = await prisma.chapter.findMany({})
+  console.log(chapters)
+  return c.html(<NewCharacter user={c.var.user} characters={c.var.characters} chapters={chapters}/>)
+})
+
+app.post('/characters', secured)
+app.post('/characters', async (c) => {
+  const body: {name: string, chapter: string, characterClass: string, race: string} = await c.req.parseBody()
+
+  const character = await prisma.character.create({
+    data: {
+      user: {connect: {id: c.var.user.id}},
+      chapter: {connect: {id:Number (body.chapter)}},
+      raceName: body.race,
+      characterClass: body.characterClass,
+      name: body.name,
+    }
+  })
+
+  return c.redirect(`/characters/${character.id}`)
+})
+
+app.get('/characters/:id', secured)
+app.get('/characters/:id', async (c) => {
+  const character = await prisma.character.findFirst({
+    where: {
+      id: parseInt(c.req.param('id')),
+    }
+  })
+
+  if (character && character.userId === c.var.user.id) {
+    return c.html(<ShowCharacter user={c.var.user} characters={c.var.characters} character={character} totalXp={character.startingXp} usedXp={0.0}/>)
+  } else {
+    return c.redirect('/')
+  }
+})
 
 app.get('/', (c) => {
   console.log('main')
-  return c.html(<Layout user={c.var.user}>Hello World</Layout>)
+  return c.html(<Layout user={c.var.user} characters={c.var.characters}>Hello World</Layout>)
 })
 
 serve({

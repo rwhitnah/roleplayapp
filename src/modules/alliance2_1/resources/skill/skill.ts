@@ -1,3 +1,4 @@
+import type { Character } from "../../../../../generated/prisma/index.js";
 import { type SkillCategoryXpRequirement, type CharacterSpellSchool, type ClassSkillCost, type CraftingCategory, type RequiredSkill, type RequirementAndOr, type RequirementsPerEach, type SkillCategory, type SkillName, type SkillTradeIn, type SkillType, type SpellLevel } from "../../models/skills.js"
 
 export class Skill implements Partial<SkillType> {
@@ -135,5 +136,8 @@ export class Skill implements Partial<SkillType> {
     return `Skills::${this.skillName}`;
   }
 
+  canBuyForCharacter(character: Character) {
+    return true;
+  }
 }
 
