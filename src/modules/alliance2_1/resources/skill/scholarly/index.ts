@@ -10,3 +10,4 @@ export { skill as improvedChanneling } from './improvedChanneling.js';
 export { skill as purifyingDrainingStrike } from './purifyingDrainingStrike.js';
 export { skill as readMagic } from './readMagic.js';
 export { earthSpells, celestialSpells } from './spellSlot.js';
+export { skill as spark} from './spark.js'
