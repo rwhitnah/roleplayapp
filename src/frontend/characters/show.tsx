@@ -16,6 +16,15 @@ export const ShowCharacter: FC = (props) => {
               <Heading level={1}>View Character: {props.character.name}</Heading>
               <Heading level={2}>{props.character.raceName} {props.character.characterClass}</Heading>
               <Heading level={3}>{props.totalXp - props.usedXp} points free of {Number(props.totalXp)} total experience</Heading>
+              <div class="xp-category">
+                {Object.keys(props.categoryXP).map((key) => {
+                  return (<div class={`bar ${key.toLowerCase()}`} style={`width: ${(100/props.usedXp) * props.categoryXP[key]}%`}>
+                    <span class={`category`}>{key}</span>
+                    <span class="spent">{props.categoryXP[key]}xp</span>
+                  </div>)
+                })}
+              </div>
+              <hr/>
               <div class="skills purchased">
                 {props.character.skill && props.character.skill.map((skill: any) => {
                   const skillClass = allSkills.find((s) => skill.name === s.skillName)
@@ -34,7 +43,7 @@ export const ShowCharacter: FC = (props) => {
                 {allSkills.map((skill: Skill) => {
                   if (props.character && props.character.characterClass && skill.canBuyForCharacter(props.character) && !props.character.skill.find((s: any) => s.name === skill.skillName)) {
                     return <div class={`skill ${skill?.skillCategory?.toLowerCase()}`}>
-                      <span class="cost">{skill.costForCharacterAtRank(props.character)}</span>
+                      <span class="cost">{skill.costForCharacterAtRank(props.character)}xp</span>
                       <span class="name">{skill.friendlyName}</span>
                       <a class="plus" href={`/characters/${props.character.id}/buy/${skill.skillName}`}>+</a>
                     </div>

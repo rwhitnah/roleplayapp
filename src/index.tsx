@@ -248,8 +248,10 @@ app.get('/characters/:id', async (c) => {
 
       return sum + cost 
     },0)
+
+    console.log(Object.keys(xpBySkillCategory))
   
-    return c.html(<ShowCharacter user={c.var.user} characters={c.var.characters} character={character} totalXp={character.startingXp} usedXp={usedXP} categoryXp={xpBySkillCategory}/>)
+    return c.html(<ShowCharacter user={c.var.user} characters={c.var.characters} character={character} totalXp={character.startingXp} usedXp={usedXP} categoryXP={xpBySkillCategory}/>)
   } else {
     return c.redirect('/')
   }

@@ -32,7 +32,7 @@ export class Race implements RaceType {
   }
 
   skillAdjustment(adjustment: RaceSkillModifier) {
-    this.skillCostMultiplier.push(adjustment);
+    this.skillCostAdjustment.push(adjustment);
   }
 
   restrictSkill(skill: SkillName) {

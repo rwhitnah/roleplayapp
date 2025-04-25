@@ -9,6 +9,13 @@
   display:block;
 }
 
+.xp-category {
+  .bar {
+    height: 40px;
+  }
+}
+
+
 .skills {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
