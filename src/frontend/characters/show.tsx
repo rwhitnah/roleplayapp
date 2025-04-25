@@ -22,7 +22,7 @@ export const ShowCharacter: FC = (props) => {
                   return skillClass && skillClass.canBuyForCharacter(props.character) ? <div class={`skill ${skillClass?.skillCategory?.toLowerCase()}`}>
                     <span class="ranks">{skill.ranks}</span>
                     <span class="name">{skillClass.friendlyName}</span>
-                    <a href={`/characters/${props.character.id}/buy/${skillClass.skillName}`}>+</a>
+                    <a class="plus" href={`/characters/${props.character.id}/buy/${skillClass.skillName}`}>+</a>
                   </div> : <div class={`skill ${skillClass?.skillCategory?.toLowerCase()}`}>
                     <span class="ranks">{skill.ranks}</span>
                     <span class="name">{skillClass?.friendlyName}</span>
@@ -35,7 +35,7 @@ export const ShowCharacter: FC = (props) => {
                   if (props.character && props.character.characterClass && skill.canBuyForCharacter(props.character) && !props.character.skill.find((s: any) => s.name === skill.skillName)) {
                     return <div class={`skill ${skill?.skillCategory?.toLowerCase()}`}>
                       <span class="name">{skill.friendlyName}</span>
-                      <a href={`/characters/${props.character.id}/buy/${skill.skillName}`}>+</a>
+                      <a class="plus" href={`/characters/${props.character.id}/buy/${skill.skillName}`}>+</a>
                     </div>
                   }
                 })}
