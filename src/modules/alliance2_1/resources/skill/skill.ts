@@ -106,9 +106,10 @@ export class Skill implements Partial<SkillType> {
               allowed = true;
             }
           }
-          if (!allowed) {
-            return 100000000000000000
-          }
+        }
+
+        if (!allowed) {
+          return 100000000000000000
         }
       }
 
@@ -227,10 +228,6 @@ export class Skill implements Partial<SkillType> {
     const costForNextRank = this.costForCharacterAtRank(character)
     let ranks = character.skill.find((s) => s.name === this.skillName)?.ranks;
 
-    console.log(this.friendlyName)
-    console.log(!this.limitlessRanks)
-    console.log(ranks)
-    console.log(!Array.isArray(this.skillCosts))
     if (!this.limitlessRanks && ranks && ranks > 0 && !Array.isArray(this.skillCosts)) {
       return false
     }

@@ -228,6 +228,7 @@ app.get('/characters/:id', async (c) => {
 
 
   if (character && character.userId === c.var.user.id) {
+    const xpBySkillCategory: any = {}
     const usedXP = character.skill.reduce((sum,s) => {
       const t = allSkills.find((v) => v.skillName === s.name)
       let cost = 0
@@ -236,11 +237,19 @@ app.get('/characters/:id', async (c) => {
           cost += t.costForCharacterAtRank(character, i)
         }
       }
-  
+
+      if (t && t.skillCategory) {
+        if (xpBySkillCategory[t.skillCategory]) {
+          xpBySkillCategory[t.skillCategory] += cost
+        } else {
+          xpBySkillCategory[t.skillCategory] = cost
+        }
+      }
+
       return sum + cost 
     },0)
   
-    return c.html(<ShowCharacter user={c.var.user} characters={c.var.characters} character={character} totalXp={character.startingXp} usedXp={usedXP}/>)
+    return c.html(<ShowCharacter user={c.var.user} characters={c.var.characters} character={character} totalXp={character.startingXp} usedXp={usedXP} categoryXp={xpBySkillCategory}/>)
   } else {
     return c.redirect('/')
   }

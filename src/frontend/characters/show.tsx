@@ -23,7 +23,7 @@ export const ShowCharacter: FC = (props) => {
                     <span class="ranks">{skill.ranks}</span>
                     <span class="name">{skillClass.friendlyName}</span>
                     <a href={`/characters/${props.character.id}/buy/${skillClass.skillName}`}>+</a>
-                  </div> : <div class={`skill ${skillClass?.skillCategory?.toString().toLowerCase()}`}>
+                  </div> : <div class={`skill ${skillClass?.skillCategory?.toLowerCase()}`}>
                     <span class="ranks">{skill.ranks}</span>
                     <span class="name">{skillClass?.friendlyName}</span>
                   </div>
@@ -32,7 +32,7 @@ export const ShowCharacter: FC = (props) => {
               <hr/>
               <div class="skills newskills">
                 {allSkills.map((skill: Skill) => {
-                  if (props.character && props.character.characterClass && skill.canBuyForCharacter(props.character)) {
+                  if (props.character && props.character.characterClass && skill.canBuyForCharacter(props.character) && !props.character.skill.find((s: any) => s.name === skill.skillName)) {
                     return <div class={`skill ${skill?.skillCategory?.toLowerCase()}`}>
                       <span class="name">{skill.friendlyName}</span>
                       <a href={`/characters/${props.character.id}/buy/${skill.skillName}`}>+</a>
