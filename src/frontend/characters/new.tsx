@@ -15,7 +15,7 @@ export const NewCharacter: FC = (props) => {
       <div class="container mx-auto sm:px-6 lg:px-8">
         <div class="hero min-h-screen bg-base-200">
           <div class="hero-content flex-col lg:flex-row-reverse">
-            <form class="container mx-auto grid gap-12 grid-cols-12 mb-28" method="post" action="/characters">
+            <form method="post" action="/characters">
               <Fieldset>
                 <Legend>New Character</Legend>
                 <Text>Tell us who you are!</Text>
