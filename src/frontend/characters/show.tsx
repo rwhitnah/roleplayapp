@@ -34,6 +34,7 @@ export const ShowCharacter: FC = (props) => {
                 {allSkills.map((skill: Skill) => {
                   if (props.character && props.character.characterClass && skill.canBuyForCharacter(props.character) && !props.character.skill.find((s: any) => s.name === skill.skillName)) {
                     return <div class={`skill ${skill?.skillCategory?.toLowerCase()}`}>
+                      <span class="cost">{skill.costForCharacterAtRank(props.character)}</span>
                       <span class="name">{skill.friendlyName}</span>
                       <a class="plus" href={`/characters/${props.character.id}/buy/${skill.skillName}`}>+</a>
                     </div>
