@@ -254,7 +254,7 @@ export class Skill implements Partial<SkillType> {
 
     // TODO switch to total xp once xp earning is in
     // @ts-ignore
-    if ((Number(character.startingXp) - spentXP) > costForNextRank) {
+    if ((Number(character.startingXp) - spentXP) >= costForNextRank) {
       if (this.requiredSkills) {
         for (const skill of this.requiredSkills) {
           const t = character.skill.find((v) => v.name === skill)
@@ -287,7 +287,7 @@ export class Skill implements Partial<SkillType> {
           // @ts-ignore
           if (this.skillXpRequirements[key] && this.skillXpRequirements.AND[key] > 0) {
             // @ts-ignore
-            if (xpBySkillCategory[key] && xpBySkillCategory[key] < this.skillXpRequirements.AND[key]) {
+            if (xpBySkillCategory[key] && xpBySkillCategory[key] <= this.skillXpRequirements.AND[key]) {
               failed = true
             }
           }
@@ -303,7 +303,7 @@ export class Skill implements Partial<SkillType> {
           // @ts-ignore
           if (this.skillXpRequirements[key] && this.skillXpRequirements.OR[key] > 0) {
             // @ts-ignore
-            if (xpBySkillCategory[key] || xpBySkillCategory[key] > this.skillXpRequirements.OR[key] * (ranks + 1)) {
+            if (xpBySkillCategory[key] || xpBySkillCategory[key] >= this.skillXpRequirements.OR[key] * (ranks + 1)) {
               passed = true
             }
           }
@@ -319,7 +319,7 @@ export class Skill implements Partial<SkillType> {
           // @ts-ignore
           if (this.skillXpRequirementsEach[key] && this.skillXpRequirementsEach.AND[key] > 0) {
             // @ts-ignore
-            if (xpBySkillCategory[key] && xpBySkillCategory[key] < this.skillXpRequirementsEach.AND[key] * (ranks + 1)) {
+            if (xpBySkillCategory[key] && xpBySkillCategory[key] <= this.skillXpRequirementsEach.AND[key] * (ranks + 1)) {
               failed = true
             }
           }
