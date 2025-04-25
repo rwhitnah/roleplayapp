@@ -11,6 +11,7 @@ import { Signup } from './frontend/signup.js'
 import { Reset } from './frontend/reset.js'
 import { NewCharacter } from './frontend/characters/new.js'
 import { ShowCharacter } from './frontend/characters/show.js'
+import { allSkills } from './modules/alliance2_1/resources/skill/index.js'
 
 const prisma = new PrismaClient()
 
@@ -224,10 +225,63 @@ app.get('/characters/:id', async (c) => {
     }
   })
 
+
+
   if (character && character.userId === c.var.user.id) {
-    return c.html(<ShowCharacter user={c.var.user} characters={c.var.characters} character={character} totalXp={character.startingXp} usedXp={0.0}/>)
+    const usedXP = character.skill.reduce((sum,s) => {
+      const t = allSkills.find((v) => v.skillName === s.name)
+      let cost = 0
+      for (let i=0; i < s.ranks; i++) {
+        if (t) {
+          cost += t.costForCharacterAtRank(character, i)
+        }
+      }
+  
+      return sum + cost 
+    },0)
+  
+    return c.html(<ShowCharacter user={c.var.user} characters={c.var.characters} character={character} totalXp={character.startingXp} usedXp={usedXP}/>)
   } else {
     return c.redirect('/')
+  }
+})
+
+app.get('/characters/:id/buy/:skillName', secured)
+app.get('/characters/:id/buy/:skillName', async (c) => {
+  const skill = allSkills.find((s) => s.skillName === c.req.param('skillName'))
+  const character = await prisma.character.findFirst({
+    where: {
+      id: parseInt(c.req.param('id')),
+    },
+    include: {
+      skill: true
+    }
+  })
+ 
+  if (character && skill && character.userId === c.var.user.id && skill.canBuyForCharacter(character)) {
+    const charskill = character.skill.find((s) => s.name === skill.skillName)
+    console.log(charskill)
+    if (charskill) {
+      await prisma.skill.update({
+        where: {
+          id: charskill.id
+        },
+        data: { 
+          ranks: charskill.ranks + 1
+        }
+      })
+    } else {
+      await prisma.skill.create({
+        data: {
+          character: { connect: { id: character.id}},
+          name: skill.skillName,
+          ranks: 1
+        }
+      })
+    }
+    return c.redirect(`/characters/${character.id}`)
+  } else {
+    return character ? c.redirect(`/characters/${character.id}`) : c.redirect('/')
   }
 })
 

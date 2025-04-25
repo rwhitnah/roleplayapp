@@ -16,14 +16,30 @@ export const ShowCharacter: FC = (props) => {
               <Heading level={1}>View Character: {props.character.name}</Heading>
               <Heading level={2}>{props.character.raceName} {props.character.characterClass}</Heading>
               <Heading level={3}>{props.totalXp - props.usedXp} points free of {Number(props.totalXp)} total experience</Heading>
-              {allSkills.map((skill: Skill) => {
-                if (props.character && props.character.characterClass && skill.canBuyForCharacter(props.character)) {
-                  return <div>
-                    {/* @ts-ignore */}
-                    <h5>{`${skill.friendlyName} - ${skill.skillCategory} - ${skill.costForCharacterAtRank(props.character)}`}</h5>
+              <div class="skills purchased">
+                {props.character.skill && props.character.skill.map((skill: any) => {
+                  const skillClass = allSkills.find((s) => skill.name === s.skillName)
+                  return skillClass && skillClass.canBuyForCharacter(props.character) ? <div class={`skill ${skillClass?.skillCategory?.toLowerCase()}`}>
+                    <span class="ranks">{skill.ranks}</span>
+                    <span class="name">{skillClass.friendlyName}</span>
+                    <a href={`/characters/${props.character.id}/buy/${skillClass.skillName}`}>+</a>
+                  </div> : <div class={`skill ${skillClass?.skillCategory?.toString().toLowerCase()}`}>
+                    <span class="ranks">{skill.ranks}</span>
+                    <span class="name">{skillClass?.friendlyName}</span>
                   </div>
-                }
-              })}
+                })}
+              </div>
+              <hr/>
+              <div class="skills newskills">
+                {allSkills.map((skill: Skill) => {
+                  if (props.character && props.character.characterClass && skill.canBuyForCharacter(props.character)) {
+                    return <div class={`skill ${skill?.skillCategory?.toLowerCase()}`}>
+                      <span class="name">{skill.friendlyName}</span>
+                      <a href={`/characters/${props.character.id}/buy/${skill.skillName}`}>+</a>
+                    </div>
+                  }
+                })}
+              </div>
             </div>}
           </div>
         </div>

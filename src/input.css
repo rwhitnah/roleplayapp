@@ -8,3 +8,83 @@
   /* @apply block; */
   display:block;
 }
+
+.skills {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  @media screen and (max-width: 1000px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  @media screen and (max-width: 800px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media screen and (max-width: 500px) {
+    grid-template-columns: 1fr;
+  }
+  font-size: 16px;
+  padding: 5px 0;
+
+  .skill {
+    margin: 3px;
+    height: 40px;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-start;
+    color: black;
+    line-height: 1;
+
+    > * {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      border-top: 10px;
+      border-bottom: 10px;
+      &:first-child {
+        border-left: 10px;
+      }
+      &:last-child {
+        border-right: 10px;
+      }
+    }
+
+    .name {
+      flex-grow: 1;
+      justify-content: flex-start;
+      position: relative;
+      padding-left: 4px;
+      font-weight: bold;
+      flex-shrink: 1;
+      overflow: hidden;
+      a {
+        color: black;
+      }
+    }
+
+    .plus {
+      height: 100%;
+      width: 36px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      span {
+        margin-top: -3px;
+      }
+    }
+
+    .ranks {
+      width: 100px;
+      flex-grow: 0;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.scholarly { background-color: #52bf72}
+.martial { background-color: #d8a41f}
+.stealth { background-color:  #6a5391}
+.weapon { background-color: #436ec1}
+.trade { background-color: #b3595a}
+.racial { background-color: #d5d476}

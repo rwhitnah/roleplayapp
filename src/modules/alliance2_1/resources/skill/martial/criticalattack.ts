@@ -1,7 +1,7 @@
 import { Skill } from '../skill.js';
 
 const skill = new Skill('CriticalAttack');
-skill.friendly('CriticalAttack');
+skill.friendly('Critical Attack');
 skill.category('Martial');
 skill.costs({
   Fighter: 3,

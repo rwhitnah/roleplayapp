@@ -60,55 +60,63 @@ export class Skill implements Partial<SkillType> {
     if (character.raceName && character.characterClass) {
       // @ts-ignore
       const race: Race = racesMap[character.raceName]
-      for (const multiplier of race.skillCostMultiplier) {
-        if (multiplier.skillName === this.skillName) {
-          // @ts-ignore
-          if (Array.isArray(this.skillCosts)) {
-            if (ranks > this.skillCosts.length) {
-              return 100000000000000000
+      if (race.skillCostMultiplier) {
+        for (const multiplier of race.skillCostMultiplier) {
+          if (multiplier.skillName === this.skillName) {
+            // @ts-ignore
+            if (Array.isArray(this.skillCosts)) {
+              if (ranks > this.skillCosts.length) {
+                return 100000000000000000
+              } else {
+                // @ts-ignore
+                return this.skillCosts[ranks][character.characterClass] * multiplier.value 
+              }
             } else {
               // @ts-ignore
-              return this.skillCosts[ranks][character.characterClass] * multiplier.value 
+              return this.skillCosts[character.characterClass] * multiplier.value
             }
-          } else {
+          }
+        }  
+      }
+      if (race.skillCostAdjustment) {
+        for (const adjustment of race.skillCostAdjustment) {
+          if (adjustment.skillName === this.skillName) {
             // @ts-ignore
-            return this.skillCosts[character.characterClass] * multiplier.value
+            if (Array.isArray(this.skillCosts)) {
+              if (ranks > this.skillCosts.length) {
+                return 100000000000000000
+              } else {
+                // @ts-ignore
+                return this.skillCosts[ranks][character.characterClass] + adjustment.value
+              }
+            } else {
+              // @ts-ignore
+              return this.skillCosts[character.characterClass] + adjustment.value
+            }
           }
         }
       }
 
-      for (const adjustment of race.skillCostAdjustment) {
-        if (adjustment.skillName === this.skillName) {
-          // @ts-ignore
-          if (Array.isArray(this.skillCosts)) {
-            if (ranks > this.skillCosts.length) {
-              return 100000000000000000
-            } else {
-              // @ts-ignore
-              return this.skillCosts[ranks][character.characterClass] + adjustment.value
-            }
-          } else {
-            // @ts-ignore
-            return this.skillCosts[character.characterClass] + adjustment.value
-          }
-        }
-      }
 
       if (this.skillCategory === "Racial") {
         let allowed = false
-        for (const skill of race.racialSkills) {
-          if (skill == this.skillName) {
-            allowed = true;
+        if (race.racialSkills) {
+          for (const skill of race.racialSkills) {
+            if (skill == this.skillName) {
+              allowed = true;
+            }
           }
-        }
-        if (!allowed) {
-          return 100000000000000000
+          if (!allowed) {
+            return 100000000000000000
+          }
         }
       }
 
-      for (const skill of race.restrictedSkills) {
-        if (skill == this.skillName) {
-          return 100000000000000000
+      if (race.restrictedSkills) {
+        for (const skill of race.restrictedSkills) {
+          if (skill == this.skillName) {
+            return 100000000000000000
+          }
         }
       }
     }
@@ -217,7 +225,15 @@ export class Skill implements Partial<SkillType> {
     // TODO: make this not run on every skill
     const xpBySkillCategory: any = {}
     const costForNextRank = this.costForCharacterAtRank(character)
-    let ranks = character.skill.find((s) => s.name === this.friendlyName)?.ranks;
+    let ranks = character.skill.find((s) => s.name === this.skillName)?.ranks;
+
+    console.log(this.friendlyName)
+    console.log(!this.limitlessRanks)
+    console.log(ranks)
+    console.log(!Array.isArray(this.skillCosts))
+    if (!this.limitlessRanks && ranks && ranks > 0 && !Array.isArray(this.skillCosts)) {
+      return false
+    }
     
     const spentXP = character.skill.reduce((sum,s) => {
       const t = allSkills.find((v) => v.skillName === s.name)
@@ -243,7 +259,7 @@ export class Skill implements Partial<SkillType> {
     // @ts-ignore
     if ((Number(character.startingXp) - spentXP) > costForNextRank) {
       if (this.requiredSkills) {
-        for (const skill in this.requiredSkills) {
+        for (const skill of this.requiredSkills) {
           const t = character.skill.find((v) => v.name === skill)
           if (!t) {
             return false
