@@ -27,9 +27,10 @@ const spellCostsByLevelSecondary: ClassSkillCost[] = [
 const spellLevels: SpellLevel[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 function createSpellSlot(school: CharacterSpellSchool, level: SpellLevel) {
   const skill = new Skill(`${school}SpellSlot${level}`);
-  skill.friendly(`Level ${level} ${school} Spell Slot`)
+  skill.friendly(`${school} Spell Slot - Level ${level} `)
   skill.setSpellSlot(level, school);
-  skill.costs([spellCostsByLevelPrimary[level - 1], spellCostsByLevelSecondary[level - 1]]);
+  skill.costs(spellCostsByLevelPrimary[level - 1])
+  skill.secondarySchoolCost(spellCostsByLevelSecondary[level - 1]);
   skill.category('Scholarly');
   skill.grantsDaily();
   if (level === 1) {

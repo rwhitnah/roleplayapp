@@ -121,13 +121,13 @@ export class Skill implements Partial<SkillType> {
         }
       }
     }
-    if (this.isSpellSlot()) {
+    if (this.isSpellSlot() || this.skillName === "EarthChanneling" || this.skillName === "CelestialChanneling") {
       if (this.school === character.primarySchool) {
         // @ts-ignore
-        return this.skillCosts[0][character.characterClass]
+        return this.skillCosts[character.characterClass]
       } else {
         // @ts-ignore
-        return this.skillCosts[1][character.characterClass]
+        return this.secondarySchoolSkillCost[character.characterClass]
       }
     }
 
@@ -234,7 +234,7 @@ export class Skill implements Partial<SkillType> {
     // TODO: make this not run on every skill
     const xpBySkillCategory: any = {}
     const costForNextRank = this.costForCharacterAtRank(character)
-    let ranks = character.skill.find((s) => s.name === this.skillName)?.ranks;
+    let ranks = character.skill.find((s) => s.name === this.skillName)?.ranks || 0;
 
     if (!this.limitlessRanks && ranks && ranks > 0 && !Array.isArray(this.skillCosts)) {
       return false
@@ -352,6 +352,18 @@ export class Skill implements Partial<SkillType> {
           return false
         }
       }
+
+      if (this.isSpellSlot()) {
+        // spell slot logic
+      }
+
+      if (this.skillName === "ImprovedChanneling") {
+        const channelRanks = (character.skill.find((s) => s.name === "EarthChanneling")?.ranks || 0) + (character.skill.find((s) => s.name === "CelestialChanneling")?.ranks || 0)
+        if (((ranks + 1) * 20) > channelRanks) {
+          return false
+        }
+      }
+
       return true
     }
     return false;

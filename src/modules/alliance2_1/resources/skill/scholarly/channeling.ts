@@ -2,7 +2,8 @@ import { type CharacterSpellSchool } from '../../../models/skills.js';
 import { Skill } from '../skill.js';
 
 function getChanneling(school: CharacterSpellSchool) {
-  const skill = new Skill('Channeling');
+  const skill = new Skill(`${school}Channeling`);
+  skill.friendly(`${school} Channeling`)
   skill.category('Scholarly');
   skill.costs({
     Fighter: 6,
@@ -22,7 +23,9 @@ function getChanneling(school: CharacterSpellSchool) {
     Spellsword: 5,
     Artisan: 6,
   });
-  skill.requireSkill({ spellLevel: 1, school });
+  skill.school = school;
+  skill.requireSkill(`${school}SpellSlot1`);
+  skill.allowsLimitlessRanks();
   return skill;
 }
 

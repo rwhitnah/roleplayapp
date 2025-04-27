@@ -248,8 +248,6 @@ app.get('/characters/:id', async (c) => {
 
       return sum + cost 
     },0)
-
-    console.log(Object.keys(xpBySkillCategory))
   
     return c.html(<ShowCharacter user={c.var.user} characters={c.var.characters} character={character} totalXp={character.startingXp} usedXp={usedXP} categoryXP={xpBySkillCategory}/>)
   } else {
@@ -271,7 +269,6 @@ app.get('/characters/:id/buy/:skillName', async (c) => {
  
   if (character && skill && character.userId === c.var.user.id && skill.canBuyForCharacter(character)) {
     const charskill = character.skill.find((s) => s.name === skill.skillName)
-    console.log(charskill)
     if (charskill) {
       await prisma.skill.update({
         where: {

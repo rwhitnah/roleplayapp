@@ -48,7 +48,7 @@ model Character {
   name           String
   characterClass String
   startingXp     Decimal @default(25.0) @db.Decimal(10, 1)
-  primarySchool  String?
+  primarySchool  String? @default("Earth")
 
   raceName String?
   subrace  String?

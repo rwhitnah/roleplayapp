@@ -14,6 +14,7 @@ skill.costs({
 });
 
 skill.allowsLimitlessRanks();
+skill.requiresWeapon();
 skill.tradeIn({
   skillName: 'CriticalAttack',
   tradeInNumber: 2,
