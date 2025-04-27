@@ -25,7 +25,7 @@ function getHighMagic(school: CharacterSpellSchool) {
   });
   skill.requireXP({ Scholarly: 75 });
   skill.secondaryRequireXp({ Scholarly: 150 });
-  skill.requireSkill({ spellLevel: 1, school });
+  skill.requireSkill(`${school}SpellSlot1`);
   return skill;
 }
 const skills = [getHighMagic('Celestial'), getHighMagic('Earth')];

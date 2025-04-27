@@ -13,6 +13,7 @@ skill.costs({
   Artisan: 4,
 });
 
-skill.requireSkill({ spellLevel: 2 });
+// TODO: fix this
+skill.requireSkill("EarthSpellSlot1");
 
 export { skill };

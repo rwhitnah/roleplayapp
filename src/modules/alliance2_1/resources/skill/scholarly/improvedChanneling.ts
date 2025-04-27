@@ -13,6 +13,4 @@ skill.costs({
   Artisan: 6,
 });
 
-skill.requirePerEachRank({ Channeling: 20 });
-
 export { skill };

@@ -16,7 +16,7 @@ skill.costs({
 skill.allowsLimitlessRanks();
 skill.grantsDaily();
 
-skill.requireSkill({ school: 'Celestial', spellLevel: 7 });
+skill.requireSkill("CelestialSpellSlot7");
 skill.requireEitherOrXPEach({ Stealth: 30, Martial: 30 });
 
 export { skill };

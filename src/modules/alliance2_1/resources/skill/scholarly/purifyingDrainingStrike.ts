@@ -13,6 +13,6 @@ skill.costs({
   Artisan: 4,
 });
 skill.requireEitherOrXP({ Martial: 30, Stealth: 30 });
-skill.requireSkill({ spellLevel: 7, school: 'Earth' });
+skill.requireSkill('EarthSpellSlot7');
 
 export { skill };
