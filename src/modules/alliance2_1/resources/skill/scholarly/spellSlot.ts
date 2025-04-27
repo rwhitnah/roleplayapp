@@ -26,16 +26,18 @@ const spellCostsByLevelSecondary: ClassSkillCost[] = [
 
 const spellLevels: SpellLevel[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 function createSpellSlot(school: CharacterSpellSchool, level: SpellLevel) {
-  const skill = new Skill('SpellSlot');
+  const skill = new Skill(`${school}SpellSlot${level}`);
+  skill.friendly(`Level ${level} ${school} Spell Slot`)
   skill.setSpellSlot(level, school);
-  skill.costs(spellCostsByLevelPrimary[level - 1]);
-  skill.costs(spellCostsByLevelSecondary[level - 1]);
+  skill.costs([spellCostsByLevelPrimary[level - 1], spellCostsByLevelSecondary[level - 1]]);
   skill.category('Scholarly');
   skill.grantsDaily();
   if (level === 1) {
     skill.requireSkill(school === 'Earth' ? 'HealingArts' : 'ReadMagic');
+  } else {
+    // @ts-ignore
+    skill.requireSkill(`${school}SpellSlot${level-1}`);
   }
-  skill.requireSkill({ school, spellLevel: level });
   return skill;
 }
 

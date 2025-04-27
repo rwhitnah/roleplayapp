@@ -121,7 +121,16 @@ export class Skill implements Partial<SkillType> {
         }
       }
     }
-    
+    if (this.isSpellSlot()) {
+      if (this.school === character.primarySchool) {
+        // @ts-ignore
+        return this.skillCosts[0][character.characterClass]
+      } else {
+        // @ts-ignore
+        return this.skillCosts[1][character.characterClass]
+      }
+    }
+
     if (Array.isArray(this.skillCosts)) {
       if (ranks > this.skillCosts.length) {
         return 100000000000000000
@@ -201,7 +210,6 @@ export class Skill implements Partial<SkillType> {
   setSpellSlot(level: SpellLevel, school: CharacterSpellSchool) {
     this.spellLevel = level;
     this.school = school;
-    this.friendlyName = `${this.school} Level ${this.spellLevel}`;
   }
 
   isSpellSlot() {
